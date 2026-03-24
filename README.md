@@ -3,7 +3,7 @@
 Backend-driven dynamic tables for Laravel + Inertia.js. Define your entire table in PHP - columns, sorting, searching, pagination, and display formatting - and the frontend renders it automatically. No duplicated definitions, no frontend table logic, no state management.
 
 [![Tests](https://github.com/forjedio/inertia-table/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/forjedio/inertia-table/actions/workflows/tests.yml)
-[![Coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/forjedio/e29bf5a426b54efb85898a4f5eb4bd49/raw/inertia-table-coverage.json)](https://github.com/forjedio/inertia-table/actions/workflows/tests.yml)
+[![Coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/RichardAnderson/e29bf5a426b54efb85898a4f5eb4bd49/raw/inertia-table-coverage.json)](https://github.com/forjedio/inertia-table/actions/workflows/tests.yml)
 [![Documentation](https://img.shields.io/badge/docs-inertia--table.forjed.io-blue)](https://inertia-table.forjed.io/)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
