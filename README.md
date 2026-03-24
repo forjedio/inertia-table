@@ -1,13 +1,16 @@
-# Inertia Table
-
-Backend-driven dynamic tables for Laravel + Inertia.js. Define your entire table in PHP - columns, sorting, searching, pagination, and display formatting - and the frontend renders it automatically. No duplicated definitions, no frontend table logic, no state management.
-
-[![Tests](https://github.com/forjedio/inertia-table/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/forjedio/inertia-table/actions/workflows/tests.yml)
-[![Coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/RichardAnderson/e29bf5a426b54efb85898a4f5eb4bd49/raw/inertia-table-coverage.json)](https://github.com/forjedio/inertia-table/actions/workflows/tests.yml)
-[![Documentation](https://img.shields.io/badge/docs-inertia--table.forjed.io-blue)](https://inertia-table.forjed.io/)
-[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
-
-![Inertia Table](https://inertia-table.forjed.io/images/demo-light.png)
+<h1 align="center">Inertia Table</h1>
+<p align="center">
+  Backend-driven dynamic tables for Laravel + Inertia.js. Define your entire table in PHP - columns, sorting, searching, pagination, and display formatting - and the frontend renders it automatically. No duplicated definitions, no frontend table logic, no state management.
+</p>
+<p align="center">
+  <a href="https://github.com/forjedio/inertia-table/actions/workflows/tests.yml"><img src="https://github.com/forjedio/inertia-table/actions/workflows/tests.yml/badge.svg?branch=main" alt="Tests"></a>
+  <a href="https://github.com/forjedio/inertia-table/actions/workflows/tests.yml"><img src="https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/RichardAnderson/e29bf5a426b54efb85898a4f5eb4bd49/raw/inertia-table-coverage.json" alt="Coverage"></a>
+  <a href="https://inertia-table.forjed.io/"><img src="https://img.shields.io/badge/docs-inertia--table.forjed.io-blue" alt="Documentation"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green" alt="License"></a>
+</p>
+<p align="center">
+  <img src="https://inertia-table.forjed.io/images/demo-light.png" alt="Inertia Table">
+</p>
 
 ## Quick Example
 
