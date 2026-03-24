@@ -43,9 +43,9 @@ jobs:
         run: |
           COVERAGE=$(php -r '
             $xml = simplexml_load_file("coverage.xml");
-            $metrics = $xml->project->directory->totals->lines;
-            $total = (int) $metrics["count"];
-            $covered = (int) $metrics["covered"];
+            $metrics = $xml->project->metrics;
+            $total = (int) $metrics["statements"];
+            $covered = (int) $metrics["coveredstatements"];
             echo $total > 0 ? round(($covered / $total) * 100, 1) : 0;
           ')
           echo "percentage=$COVERAGE" >> $GITHUB_OUTPUT
