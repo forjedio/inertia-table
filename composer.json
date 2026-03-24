@@ -1,0 +1,56 @@
+{
+    "name": "forjedio/inertia-table",
+    "description": "Backend-driven dynamic tables for Laravel + Inertia.js",
+    "license": "MIT",
+    "keywords": [
+        "laravel",
+        "inertia",
+        "tables",
+        "dynamic-tables",
+        "datatable"
+    ],
+    "authors": [
+        {
+            "name": "Forjed",
+            "email": "packages@forjed.io",
+            "homepage": "https://forjed.io"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "illuminate/console": "^12.0|^13.0",
+        "illuminate/database": "^12.0|^13.0",
+        "illuminate/http": "^12.0|^13.0",
+        "illuminate/support": "^12.0|^13.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^10.0",
+        "pestphp/pest": "^3.0",
+        "pestphp/pest-plugin-laravel": "^3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Forjed\\InertiaTable\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Forjed\\InertiaTable\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Forjed\\InertiaTable\\TableServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    }
+}

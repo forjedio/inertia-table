@@ -1,0 +1,109 @@
+# Inertia Table
+
+Backend-driven dynamic tables for Laravel + Inertia.js. Define your entire table in PHP - columns, sorting, searching, pagination, and display formatting - and the frontend renders it automatically. No duplicated definitions, no frontend table logic, no state management.
+
+[![Tests](https://github.com/forjedio/inertia-table/actions/workflows/tests.yml/badge.svg?branch=main)](https://github.com/forjedio/inertia-table/actions/workflows/tests.yml)
+[![Coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/forjedio/e29bf5a426b54efb85898a4f5eb4bd49/raw/inertia-table-coverage.json)](https://github.com/forjedio/inertia-table/actions/workflows/tests.yml)
+[![Documentation](https://img.shields.io/badge/docs-inertia--table.forjed.io-blue)](https://inertia-table.forjed.io/)
+[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+
+![Inertia Table](https://inertia-table.forjed.io/images/demo-light.png)
+
+## Quick Example
+
+```php
+class CompanyTable extends Table
+{
+    protected string $defaultSort = '-created_at';
+
+    protected function columns(): array
+    {
+        return [
+            LinkColumn::make('name', 'Name')
+                ->route('companies.show', ['company' => ':id'])
+                ->sortable(),
+            TextColumn::make('email', 'Email')->sortable(),
+            EnumColumn::make('status', 'Status')->sortable(),
+            BooleanColumn::make('active', 'Active'),
+            DateTimeColumn::make('created_at', 'Created')->sortable(),
+            ActionsColumn::make(),
+            Column::data('id'),
+        ];
+    }
+
+    protected function searchable(): array
+    {
+        return ['name', 'email'];
+    }
+}
+```
+
+Pass it to your Inertia page:
+
+```php
+return Inertia::render('Companies/Index', [
+    'companies' => CompanyTable::make(Company::query())->paginate(),
+]);
+```
+
+Render it on the frontend:
+
+```tsx
+import { InertiaTable } from '@forjedio/inertia-table-react';
+
+export default function Index({ companies }) {
+    return <InertiaTable tableData={companies} />;
+}
+```
+
+That's it. Search, sorting, pagination, and all cell rendering handled automatically.
+
+## Features
+
+- **11 column types** - Text, Badge, Boolean, Date, DateTime, Link, Copyable, Enum, Component, Actions, and hidden data columns
+- **Icon modifiers** - `withIcon()` and `asIcon()` on any column with map, closure, or fixed icon support
+- **Sorting** - single-column with URL state, three-tier priority, `-` prefix for descending
+- **Searching** - global full-text search with configurable debounce
+- **Pagination** - full and simple modes with configurable per-page
+- **Enum integration** - PHP enums automatically render as coloured badges
+- **Table hooks** - `beforeQuery` and `afterData` hooks for query modification and data transformation
+- **Frontend hooks** - extension system for realtime updates, analytics, and feature flags
+- **Link routing** - Ziggy or server-side URL resolution (configurable)
+- **Multiple tables** - identifier system for independent tables on the same page
+- **Component columns** - register reusable frontend components for custom cell rendering
+- **Dark mode** - all styles include `dark:` variants out of the box
+- **Fully customisable** - override any cell, header, search, pagination, or toolbar via render props. Compatible with shadcn/ui.
+
+## Installation
+
+```bash
+composer require forjedio/inertia-table
+```
+
+```bash
+# React
+npm install @forjedio/inertia-table-react
+
+# Vue
+npm install @forjedio/inertia-table-vue
+```
+
+## Requirements
+
+- PHP 8.2+
+- Laravel 12 or 13
+- Inertia.js 2.0+
+- React 18/19 or Vue 3.4+
+- Tailwind CSS 3.4+ or 4.0+
+
+## Documentation
+
+Full documentation is available at **[inertia-table.forjed.io](https://inertia-table.forjed.io/)**.
+
+## Live Demo
+
+See it in action at **[inertia-table-demo.forjed.io](https://inertia-table-demo.forjed.io/)**.
+
+## License
+
+MIT

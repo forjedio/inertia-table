@@ -1,0 +1,22 @@
+<?php
+
+namespace {{ namespace }};
+
+use Forjed\InertiaTable\Table;
+use Forjed\InertiaTable\Column;
+{{ model_import }}
+
+class {{ class }} extends Table
+{
+    protected function columns(): array
+    {
+        return [
+            {{ columns }}
+        ];
+    }
+
+    protected function searchable(): array
+    {
+        return [];
+    }
+}
