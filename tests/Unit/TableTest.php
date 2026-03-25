@@ -158,3 +158,107 @@ it('withSettings merges with existing settings', function () {
 
     expect($result['tableSettings'])->toBe(['existing' => true, 'new' => 'value']);
 });
+
+it('query() modifies query before execution', function () {
+    $table = new class(DB::table('test_items')) extends Table
+    {
+        protected string $defaultSort = 'id';
+
+        protected function columns(): array
+        {
+            return [Column::make('name', 'Name')];
+        }
+
+        protected function query(): void
+        {
+            $this->query->where('status', 'active');
+        }
+    };
+
+    $result = $table->simplePaginate();
+
+    expect($result['data'])->toHaveCount(1)
+        ->and($result['data'][0]['name'])->toBe('First');
+});
+
+it('query() runs before hooks', function () {
+    $order = [];
+
+    $table = new class(DB::table('test_items')) extends Table
+    {
+        protected string $defaultSort = 'id';
+
+        public array $order;
+
+        protected function columns(): array
+        {
+            return [Column::make('name', 'Name')];
+        }
+
+        protected function query(): void
+        {
+            $this->order[] = 'query';
+        }
+    };
+
+    $table->order = &$order;
+    $tableClass = $table::class;
+
+    Table::beforeQuery($tableClass, function ($query, array &$columns) use (&$order) {
+        $order[] = 'hook';
+    });
+
+    $table->simplePaginate();
+
+    Table::clearHooks($tableClass);
+
+    expect($order)->toBe(['query', 'hook']);
+});
+
+it('query() works with toArray output', function () {
+    $table = new class(DB::table('test_items')) extends Table
+    {
+        protected string $defaultSort = 'id';
+
+        protected function columns(): array
+        {
+            return [Column::make('name', 'Name')];
+        }
+
+        protected function query(): void
+        {
+            $this->query->where('status', 'active');
+        }
+    };
+
+    $result = $table->toArray();
+
+    expect($result)->toHaveCount(1);
+});
+
+it('query() works with toCollection output', function () {
+    $table = new class(DB::table('test_items')) extends Table
+    {
+        protected string $defaultSort = 'id';
+
+        protected function columns(): array
+        {
+            return [Column::make('name', 'Name')];
+        }
+
+        protected function query(): void
+        {
+            $this->query->where('status', 'active');
+        }
+    };
+
+    $result = $table->toCollection();
+
+    expect($result)->toHaveCount(1);
+});
+
+it('default query() is a no-op', function () {
+    $result = createTestTable()->simplePaginate();
+
+    expect($result['data'])->toHaveCount(2);
+});

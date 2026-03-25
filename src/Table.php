@@ -38,6 +38,15 @@ abstract class Table
 
     abstract protected function columns(): array;
 
+    /**
+     * Apply default query modifications (eager loading, scopes, etc.).
+     * Called at the start of every query before hooks, search, and sorting.
+     */
+    protected function query(): void
+    {
+        //
+    }
+
     protected function searchable(): array
     {
         return [];
@@ -191,6 +200,8 @@ abstract class Table
      */
     protected function prepareQuery(): array
     {
+        $this->query();
+
         $columns = $this->columns();
 
         app(HookRegistry::class)->runBeforeQueryHooks(static::class, $this->query, $columns);
