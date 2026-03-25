@@ -35,7 +35,7 @@ jobs:
 
     strategy:
       matrix:
-        php: ['8.2', '8.3', '8.4']
+        php: ['8.2', '8.3', '8.4', '8.5']
 
     name: PHP ${{ matrix.php }}
 
@@ -53,15 +53,15 @@ jobs:
         run: composer install --no-interaction --prefer-dist
 
       - name: Run tests
-        if: matrix.php != '8.4'
+        if: matrix.php != '8.5'
         run: vendor/bin/pest
 
       - name: Run tests with coverage
-        if: matrix.php == '8.4'
+        if: matrix.php == '8.5'
         run: vendor/bin/pest --coverage --coverage-clover=coverage.xml
 
       - name: Extract coverage percentage
-        if: matrix.php == '8.4' && github.ref == 'refs/heads/main' && github.event_name == 'push'
+        if: matrix.php == '8.5' && github.ref == 'refs/heads/main' && github.event_name == 'push'
         id: coverage
         run: |
           COVERAGE=$(php -r '
@@ -86,7 +86,7 @@ jobs:
           fi
 
       - name: Update coverage badge
-        if: matrix.php == '8.4' && github.ref == 'refs/heads/main' && github.event_name == 'push'
+        if: matrix.php == '8.5' && github.ref == 'refs/heads/main' && github.event_name == 'push'
         uses: schneegans/dynamic-badges-action@v1.7.0
         with:
           auth: ${{ secrets.GIST_SECRET }}
