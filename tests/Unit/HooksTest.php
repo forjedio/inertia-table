@@ -1,7 +1,7 @@
 <?php
 
-use Forjed\InertiaTable\Table;
 use Forjed\InertiaTable\Column;
+use Forjed\InertiaTable\Table;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Schema;
@@ -59,8 +59,6 @@ function createChildHookTable()
     };
 }
 
-// --- beforeQuery ---
-
 it('beforeQuery modifies query with where clause', function () {
     $tableClass = createHookTable()::class;
 
@@ -115,8 +113,6 @@ it('beforeQuery works with toCollection output', function () {
 
     expect($result)->toHaveCount(2);
 });
-
-// --- afterData ---
 
 it('afterData transforms row data', function () {
     $tableClass = createHookTable()::class;
@@ -180,8 +176,6 @@ it('afterData works with toCollection output', function () {
     expect($result->first()['name'])->toBe('ALICE');
 });
 
-// --- Multiple hooks ---
-
 it('multiple hooks stack in registration order', function () {
     $tableClass = createHookTable()::class;
 
@@ -207,8 +201,6 @@ it('multiple hooks stack in registration order', function () {
     expect($result['data'][0]['name'])->toBe('ALICE!');
 });
 
-// --- Scoping ---
-
 it('hooks are scoped to specific table class', function () {
     $tableClass = createHookTable()::class;
 
@@ -222,8 +214,6 @@ it('hooks are scoped to specific table class', function () {
 
     expect($result['data'])->toHaveCount(3);
 });
-
-// --- clearHooks ---
 
 it('clearHooks removes all hooks', function () {
     $tableClass = createHookTable()::class;
@@ -261,8 +251,6 @@ it('clearHooks with class only clears that class', function () {
 
     expect($result['data'][0]['name'])->toBe('HOOKED');
 });
-
-// --- Combined ---
 
 it('beforeQuery and afterData work together', function () {
     $tableClass = createHookTable()::class;

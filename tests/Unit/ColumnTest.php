@@ -282,6 +282,101 @@ it('serialises to correct DynamicColumnDef shape', function () {
         ->and($arr['displays'])->toHaveCount(1);
 });
 
+it('adjust() transforms value with custom closure', function () {
+    $col = Column::make('name', 'Name')->adjust(fn ($v) => strrev($v));
+
+    $model = (object) ['name' => 'hello'];
+    expect($col->getValue($model))->toBe('olleh');
+});
+
+it('adjust() chains multiple adjusters in order', function () {
+    $col = Column::make('name', 'Name')
+        ->adjust(fn ($v) => trim($v))
+        ->uppercase();
+
+    $model = (object) ['name' => '  hello  '];
+    expect($col->getValue($model))->toBe('HELLO');
+});
+
+it('uppercase() transforms value', function () {
+    $col = Column::make('name', 'Name')->uppercase();
+
+    $model = (object) ['name' => 'hello'];
+    expect($col->getValue($model))->toBe('HELLO');
+});
+
+it('lowercase() transforms value', function () {
+    $col = Column::make('name', 'Name')->lowercase();
+
+    $model = (object) ['name' => 'HELLO'];
+    expect($col->getValue($model))->toBe('hello');
+});
+
+it('ucFirst() transforms value', function () {
+    $col = Column::make('name', 'Name')->ucFirst();
+
+    $model = (object) ['name' => 'hello world'];
+    expect($col->getValue($model))->toBe('Hello world');
+});
+
+it('ucWords() transforms value', function () {
+    $col = Column::make('name', 'Name')->ucWords();
+
+    $model = (object) ['name' => 'hello world'];
+    expect($col->getValue($model))->toBe('Hello World');
+});
+
+it('adjust() passes null through convenience methods unchanged', function () {
+    $col = Column::make('name', 'Name')->uppercase();
+
+    $model = (object) ['name' => null];
+    expect($col->getValue($model))->toBeNull();
+});
+
+it('adjust() allows custom null handling', function () {
+    $col = Column::make('name', 'Name')->adjust(fn ($v) => $v ?? 'N/A');
+
+    $model = (object) ['name' => null];
+    expect($col->getValue($model))->toBe('N/A');
+});
+
+it('fallback() replaces null with default value', function () {
+    $col = Column::make('name', 'Name')->fallback();
+
+    $model = (object) ['name' => null];
+    expect($col->getValue($model))->toBe('N/A');
+});
+
+it('fallback() replaces null with custom value', function () {
+    $col = Column::make('name', 'Name')->fallback('Unknown');
+
+    $model = (object) ['name' => null];
+    expect($col->getValue($model))->toBe('Unknown');
+});
+
+it('fallback() passes non-null values through', function () {
+    $col = Column::make('name', 'Name')->fallback('Unknown');
+
+    $model = (object) ['name' => 'John'];
+    expect($col->getValue($model))->toBe('John');
+});
+
+it('adjust() works with value() resolver', function () {
+    $col = Column::make('name', 'Name')
+        ->value(fn ($m) => $m->first.' '.$m->last)
+        ->uppercase();
+
+    $model = (object) ['first' => 'John', 'last' => 'Doe'];
+    expect($col->getValue($model))->toBe('JOHN DOE');
+});
+
+it('adjust() ignores non-string values in convenience methods', function () {
+    $col = Column::make('count', 'Count')->uppercase();
+
+    $model = (object) ['count' => 42];
+    expect($col->getValue($model))->toBe(42);
+});
+
 it('resolves display values from closures', function () {
     $col = Column::make('name', 'Name')->text(fn ($m) => strtoupper($m->name));
 

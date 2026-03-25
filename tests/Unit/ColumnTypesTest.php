@@ -2,17 +2,15 @@
 
 use Forjed\InertiaTable\Column;
 use Forjed\InertiaTable\Columns\BadgeColumn;
+use Forjed\InertiaTable\Columns\BooleanColumn;
 use Forjed\InertiaTable\Columns\ComponentColumn;
 use Forjed\InertiaTable\Columns\CopyableColumn;
 use Forjed\InertiaTable\Columns\DateColumn;
 use Forjed\InertiaTable\Columns\DateTimeColumn;
 use Forjed\InertiaTable\Columns\EnumColumn;
 use Forjed\InertiaTable\Columns\LinkColumn;
-use Forjed\InertiaTable\Columns\BooleanColumn;
 use Forjed\InertiaTable\Columns\TextColumn;
 use Forjed\InertiaTable\Contracts\HasTableDisplay;
-
-// --- TextColumn ---
 
 it('TextColumn auto-adds text display', function () {
     $col = TextColumn::make('name', 'Name');
@@ -22,13 +20,18 @@ it('TextColumn auto-adds text display', function () {
         ->and($arr['displays'][0]['type'])->toBe('text');
 });
 
+it('TextColumn with ucFirst adjuster transforms value', function () {
+    $col = TextColumn::make('name', 'Name')->ucFirst();
+
+    $model = (object) ['name' => 'hello world'];
+    expect($col->getValue($model))->toBe('Hello world');
+});
+
 it('TextColumn supports chaining', function () {
     $col = TextColumn::make('name', 'Name')->sortable();
 
     expect($col->isSortable())->toBeTrue();
 });
-
-// --- BadgeColumn ---
 
 it('BadgeColumn auto-adds badge display', function () {
     $col = BadgeColumn::make('status', 'Status');
@@ -66,8 +69,6 @@ it('BadgeColumn supports chaining colorField and variant', function () {
         ->and($col->isSortable())->toBeTrue();
 });
 
-// --- DateColumn ---
-
 it('DateColumn auto-adds date display', function () {
     $col = DateColumn::make('created_at', 'Created');
     $arr = $col->toArray();
@@ -98,8 +99,6 @@ it('DateColumn can add additional displays', function () {
         ->and($arr['displays'][1]['type'])->toBe('copyable');
 });
 
-// --- DateTimeColumn ---
-
 it('DateTimeColumn auto-adds date display with datetime format', function () {
     $col = DateTimeColumn::make('created_at', 'Created');
     $arr = $col->toArray();
@@ -115,8 +114,6 @@ it('DateTimeColumn format can be overridden', function () {
 
     expect($arr['displays'][0]['format'])->toBe('HH:mm DD/MM');
 });
-
-// --- LinkColumn ---
 
 it('LinkColumn requires route() to add link display', function () {
     $col = LinkColumn::make('name', 'Name')->route('items.show', ['item' => ':id']);
@@ -145,8 +142,6 @@ it('LinkColumn supports sortable chaining', function () {
     expect($col->isSortable())->toBeTrue();
 });
 
-// --- CopyableColumn ---
-
 it('CopyableColumn auto-adds copyable display', function () {
     $col = CopyableColumn::make('ip', 'IP Address');
     $arr = $col->toArray();
@@ -160,8 +155,6 @@ it('CopyableColumn supports chaining', function () {
 
     expect($col->isSortable())->toBeTrue();
 });
-
-// --- withIcon / asIcon ---
 
 it('withIcon with fixed string prepends icon display', function () {
     $col = Column::make('name', 'Name')->withIcon('user')->text();
@@ -230,8 +223,6 @@ it('asIcon ignores other displays', function () {
     expect($arr['displays'][0]['type'])->toBe('icon');
 });
 
-// --- ComponentColumn ---
-
 it('ComponentColumn auto-adds component display', function () {
     $col = ComponentColumn::create('actions', 'Actions', 'ServerActions');
     $arr = $col->toArray();
@@ -247,8 +238,6 @@ it('ComponentColumn supports hidden', function () {
 
     expect($col->isHidden())->toBeTrue();
 });
-
-// --- EnumColumn ---
 
 it('EnumColumn auto-adds enum display', function () {
     $col = EnumColumn::make('status', 'Status');
@@ -282,13 +271,31 @@ it('EnumColumn resolves getText and getColor from HasTableDisplay', function () 
     expect($displayValues['_status_enum_color'])->toBe('info');
 });
 
+it('EnumColumn with uppercase adjuster transforms resolved text', function () {
+    $enum = new class implements HasTableDisplay
+    {
+        public function getText(): string
+        {
+            return 'Running';
+        }
+
+        public function getColor(): string
+        {
+            return 'info';
+        }
+    };
+
+    $col = EnumColumn::make('status', 'Status')->uppercase();
+    $model = (object) ['status' => $enum];
+
+    expect($col->getValue($model))->toBe('RUNNING');
+});
+
 it('EnumColumn supports sortable chaining', function () {
     $col = EnumColumn::make('status', 'Status')->sortable();
 
     expect($col->isSortable())->toBeTrue();
 });
-
-// --- BooleanColumn ---
 
 it('BooleanColumn renders Yes/No by default', function () {
     $col = BooleanColumn::make('active', 'Active');
@@ -344,6 +351,13 @@ it('BooleanColumn per-column text overrides static defaults', function () {
     // Reset defaults
     BooleanColumn::defaultYesText('Yes');
     BooleanColumn::defaultNoText('No');
+});
+
+it('BooleanColumn with uppercase adjuster transforms resolved text', function () {
+    $col = BooleanColumn::make('active', 'Active')->uppercase();
+
+    expect($col->getValue((object) ['active' => true]))->toBe('YES')
+        ->and($col->getValue((object) ['active' => false]))->toBe('NO');
 });
 
 it('BooleanColumn supports sortable chaining', function () {
