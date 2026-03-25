@@ -1,7 +1,7 @@
 <?php
 
-use Forjed\InertiaTable\Table;
 use Forjed\InertiaTable\Column;
+use Forjed\InertiaTable\Table;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 

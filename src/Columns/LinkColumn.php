@@ -2,7 +2,6 @@
 
 namespace Forjed\InertiaTable\Columns;
 
-use Closure;
 use Forjed\InertiaTable\Column;
 
 class LinkColumn extends Column
