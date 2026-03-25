@@ -12,7 +12,6 @@ use Forjed\InertiaTable\Columns\BooleanColumn;
 use Forjed\InertiaTable\Columns\TextColumn;
 use Forjed\InertiaTable\Contracts\HasTableDisplay;
 
-// --- TextColumn ---
 
 it('TextColumn auto-adds text display', function () {
     $col = TextColumn::make('name', 'Name');
@@ -28,7 +27,6 @@ it('TextColumn supports chaining', function () {
     expect($col->isSortable())->toBeTrue();
 });
 
-// --- BadgeColumn ---
 
 it('BadgeColumn auto-adds badge display', function () {
     $col = BadgeColumn::make('status', 'Status');
@@ -66,7 +64,6 @@ it('BadgeColumn supports chaining colorField and variant', function () {
         ->and($col->isSortable())->toBeTrue();
 });
 
-// --- DateColumn ---
 
 it('DateColumn auto-adds date display', function () {
     $col = DateColumn::make('created_at', 'Created');
@@ -98,7 +95,6 @@ it('DateColumn can add additional displays', function () {
         ->and($arr['displays'][1]['type'])->toBe('copyable');
 });
 
-// --- DateTimeColumn ---
 
 it('DateTimeColumn auto-adds date display with datetime format', function () {
     $col = DateTimeColumn::make('created_at', 'Created');
@@ -116,7 +112,6 @@ it('DateTimeColumn format can be overridden', function () {
     expect($arr['displays'][0]['format'])->toBe('HH:mm DD/MM');
 });
 
-// --- LinkColumn ---
 
 it('LinkColumn requires route() to add link display', function () {
     $col = LinkColumn::make('name', 'Name')->route('items.show', ['item' => ':id']);
@@ -145,7 +140,6 @@ it('LinkColumn supports sortable chaining', function () {
     expect($col->isSortable())->toBeTrue();
 });
 
-// --- CopyableColumn ---
 
 it('CopyableColumn auto-adds copyable display', function () {
     $col = CopyableColumn::make('ip', 'IP Address');
@@ -161,7 +155,6 @@ it('CopyableColumn supports chaining', function () {
     expect($col->isSortable())->toBeTrue();
 });
 
-// --- withIcon / asIcon ---
 
 it('withIcon with fixed string prepends icon display', function () {
     $col = Column::make('name', 'Name')->withIcon('user')->text();
@@ -230,7 +223,6 @@ it('asIcon ignores other displays', function () {
     expect($arr['displays'][0]['type'])->toBe('icon');
 });
 
-// --- ComponentColumn ---
 
 it('ComponentColumn auto-adds component display', function () {
     $col = ComponentColumn::create('actions', 'Actions', 'ServerActions');
@@ -248,7 +240,6 @@ it('ComponentColumn supports hidden', function () {
     expect($col->isHidden())->toBeTrue();
 });
 
-// --- EnumColumn ---
 
 it('EnumColumn auto-adds enum display', function () {
     $col = EnumColumn::make('status', 'Status');
@@ -288,7 +279,6 @@ it('EnumColumn supports sortable chaining', function () {
     expect($col->isSortable())->toBeTrue();
 });
 
-// --- BooleanColumn ---
 
 it('BooleanColumn renders Yes/No by default', function () {
     $col = BooleanColumn::make('active', 'Active');

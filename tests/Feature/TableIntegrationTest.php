@@ -6,7 +6,6 @@ use Forjed\InertiaTable\Contracts\HasTableDisplay;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-// --- Test helpers ---
 
 enum TestStatus: string implements HasTableDisplay
 {
@@ -82,7 +81,6 @@ function createIntegrationTable($query = null, array $settings = [])
     return $table;
 }
 
-// --- Setup ---
 
 beforeEach(function () {
     Schema::create('integration_items', function (Blueprint $table) {
@@ -105,7 +103,6 @@ afterEach(function () {
     Schema::dropIfExists('integration_items');
 });
 
-// --- Tests ---
 
 it('produces complete table output with correct structure', function () {
     $result = createIntegrationTable()->simplePaginate();
