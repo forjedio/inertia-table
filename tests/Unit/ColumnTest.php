@@ -418,7 +418,8 @@ it('dot-notation display auto-key uses aliased name', function () {
     $model = (object) ['owner' => (object) ['name' => 'John']];
     $values = $col->resolveDisplayValues($model);
 
-    expect($values)->toHaveKey('__owner_name_d0_key');
+    expect($values)->toHaveKey('__owner_name_d0_key')
+        ->and($values['__owner_name_d0_key'])->toBe('test');
 });
 
 it('dot-notation enum generates correct color key', function () {
