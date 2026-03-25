@@ -66,6 +66,8 @@ abstract class Table
 
     /**
      * Register a hook that runs before query execution on ALL tables.
+     * The callback receives the query builder and columns array (by reference).
+     * The table class is passed as an optional trailing parameter.
      */
     public static function globalBeforeQuery(Closure $callback): void
     {
@@ -74,6 +76,9 @@ abstract class Table
 
     /**
      * Register a hook that runs after data mapping on ALL tables.
+     * The callback receives the mapped row Collection.
+     * Return a modified Collection, or null to keep the original.
+     * The table class is passed as an optional trailing parameter.
      */
     public static function globalAfterData(Closure $callback): void
     {

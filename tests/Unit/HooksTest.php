@@ -274,7 +274,6 @@ it('beforeQuery and afterData work together', function () {
         ->and($result['data'][1]['name'])->toBe('CHARLIE');
 });
 
-
 it('globalBeforeQuery modifies query on all tables', function () {
     Table::globalBeforeQuery(function ($query, array &$columns) {
         $query->where('status', 'active');
