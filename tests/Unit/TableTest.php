@@ -1,7 +1,7 @@
 <?php
 
-use Forjed\InertiaTable\Table;
 use Forjed\InertiaTable\Column;
+use Forjed\InertiaTable\Table;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
@@ -145,6 +145,7 @@ it('withSettings merges with existing settings', function () {
     $table = new class(DB::table('test_items')) extends Table
     {
         protected string $defaultSort = 'id';
+
         protected array $tableSettings = ['existing' => true];
 
         protected function columns(): array

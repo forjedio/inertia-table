@@ -25,6 +25,9 @@ class Column
 
     protected ?Closure $valueResolver = null;
 
+    /** @var array<int, Closure> */
+    protected array $adjusters = [];
+
     protected array $iconDisplay = ['type' => 'icon'];
 
     protected bool $iconOnly = false;
@@ -91,6 +94,38 @@ class Column
         $this->valueResolver = $resolver;
 
         return $this;
+    }
+
+    public function adjust(Closure $adjuster): static
+    {
+        $this->adjusters[] = $adjuster;
+
+        return $this;
+    }
+
+    public function uppercase(): static
+    {
+        return $this->adjust(fn ($value) => is_string($value) ? strtoupper($value) : $value);
+    }
+
+    public function lowercase(): static
+    {
+        return $this->adjust(fn ($value) => is_string($value) ? strtolower($value) : $value);
+    }
+
+    public function ucFirst(): static
+    {
+        return $this->adjust(fn ($value) => is_string($value) ? ucfirst($value) : $value);
+    }
+
+    public function ucWords(): static
+    {
+        return $this->adjust(fn ($value) => is_string($value) ? ucwords($value) : $value);
+    }
+
+    public function fallback(mixed $default = 'N/A'): static
+    {
+        return $this->adjust(fn ($value) => $value ?? $default);
     }
 
     // --- Display modifiers ---
@@ -256,11 +291,15 @@ class Column
 
     public function getValue(mixed $model): mixed
     {
-        if ($this->valueResolver) {
-            return ($this->valueResolver)($model);
+        $value = $this->valueResolver
+            ? ($this->valueResolver)($model)
+            : data_get($model, $this->accessor ?? $this->name);
+
+        foreach ($this->adjusters as $adjuster) {
+            $value = $adjuster($value);
         }
 
-        return data_get($model, $this->accessor ?? $this->name);
+        return $value;
     }
 
     public function resolveDisplayValues(mixed $model): array
@@ -299,7 +338,7 @@ class Column
         $displays = $this->displays;
 
         // withIcon: prepend icon display before other displays, and add icon_key to badges
-        if (isset($this->iconDisplay['key']) && ! $this->iconOnly) {
+        if (isset($this->iconDisplay['key'])) {
             $iconKey = $this->iconDisplay['key'];
 
             // Add icon_key to any badge displays so the icon renders inside the badge

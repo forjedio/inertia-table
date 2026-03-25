@@ -1,11 +1,11 @@
 <?php
 
-use Forjed\InertiaTable\Table;
 use Forjed\InertiaTable\Column;
 use Forjed\InertiaTable\Contracts\HasTableDisplay;
+use Forjed\InertiaTable\Table;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Schema;
-
 
 enum TestStatus: string implements HasTableDisplay
 {
@@ -36,6 +36,7 @@ function createIntegrationTable($query = null, array $settings = [])
     $table = new class($query) extends Table
     {
         protected string $defaultSort = 'id';
+
         protected ?string $identifier = 'items';
 
         protected function columns(): array
@@ -81,7 +82,6 @@ function createIntegrationTable($query = null, array $settings = [])
     return $table;
 }
 
-
 beforeEach(function () {
     Schema::create('integration_items', function (Blueprint $table) {
         $table->id();
@@ -102,7 +102,6 @@ beforeEach(function () {
 afterEach(function () {
     Schema::dropIfExists('integration_items');
 });
-
 
 it('produces complete table output with correct structure', function () {
     $result = createIntegrationTable()->simplePaginate();
@@ -250,7 +249,7 @@ it('toArray returns flat row data without pagination', function () {
 it('toCollection returns Collection of rows', function () {
     $result = createIntegrationTable()->toCollection();
 
-    expect($result)->toBeInstanceOf(\Illuminate\Support\Collection::class)
+    expect($result)->toBeInstanceOf(Collection::class)
         ->and($result)->toHaveCount(3)
         ->and($result->first())->toHaveKey('name', 'Alice');
 });
