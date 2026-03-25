@@ -34,7 +34,13 @@ class Column
 
     public function __construct(string $name, string $header)
     {
-        $this->name = $name;
+        if (str_contains($name, '.')) {
+            $this->accessor = $name;
+            $this->name = '_'.str_replace('.', '_', $name);
+        } else {
+            $this->name = $name;
+        }
+
         $this->header = $header;
     }
 

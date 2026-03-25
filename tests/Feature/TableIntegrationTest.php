@@ -265,6 +265,42 @@ it('toArray supports take and skip', function () {
         ->and($result[0]['name'])->toBe('Bob');
 });
 
+it('dot-notation column produces aliased key in row data', function () {
+    $table = new class(DB::table('integration_items')) extends Table
+    {
+        protected string $defaultSort = 'id';
+
+        protected ?string $identifier = 'items';
+
+        protected function columns(): array
+        {
+            return [
+                Column::make('name', 'Name'),
+                Column::make('status.label', 'Status Label')
+                    ->value(fn ($m) => strtoupper($m->status)),
+            ];
+        }
+
+        protected function searchable(): array
+        {
+            return [];
+        }
+    };
+
+    $result = $table->simplePaginate();
+
+    // Column serialised with aliased name
+    $columnNames = array_column($result['columns'], 'name');
+    expect($columnNames)->toContain('_status_label');
+
+    // Sort key preserves dot notation
+    $statusCol = collect($result['columns'])->firstWhere('name', '_status_label');
+    expect($statusCol['sort_key'])->toBe('status.label');
+
+    // Row data uses aliased key
+    expect($result['data'][0])->toHaveKey('_status_label', 'ACTIVE');
+});
+
 it('search and sort work together', function () {
     request()->merge(['itemsSearch' => 'test.com', 'itemsSort' => '-name']);
 

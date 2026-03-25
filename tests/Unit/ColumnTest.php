@@ -386,3 +386,79 @@ it('resolves display values from closures', function () {
     expect($values)->toHaveKey('_name_d0_key')
         ->and($values['_name_d0_key'])->toBe('TEST');
 });
+
+it('dot-notation name auto-sets accessor and aliases name with prefix', function () {
+    $col = Column::make('owner.name', 'Owner');
+
+    expect($col->getName())->toBe('_owner_name')
+        ->and($col->getAccessor())->toBe('owner.name')
+        ->and($col->getSortKey())->toBe('owner.name');
+});
+
+it('dot-notation resolves value through nested object', function () {
+    $col = Column::make('owner.name', 'Owner');
+
+    $model = (object) ['owner' => (object) ['name' => 'John']];
+    expect($col->getValue($model))->toBe('John');
+});
+
+it('dot-notation serialises with aliased name and dot sort_key', function () {
+    $col = Column::make('owner.name', 'Owner')->sortable();
+    $arr = $col->toArray();
+
+    expect($arr['name'])->toBe('_owner_name')
+        ->and($arr['sort_key'])->toBe('owner.name')
+        ->and($arr['header'])->toBe('Owner')
+        ->and($arr['sortable'])->toBeTrue();
+});
+
+it('dot-notation display auto-key uses aliased name', function () {
+    $col = Column::make('owner.name', 'Owner')->text(fn ($m) => 'test');
+
+    $model = (object) ['owner' => (object) ['name' => 'John']];
+    $values = $col->resolveDisplayValues($model);
+
+    expect($values)->toHaveKey('__owner_name_d0_key')
+        ->and($values['__owner_name_d0_key'])->toBe('test');
+});
+
+it('dot-notation enum generates correct color key', function () {
+    $col = Column::make('owner.status', 'Status')->enum();
+    $arr = $col->toArray();
+
+    $badgeDisplay = collect($arr['displays'])->firstWhere('type', 'badge');
+    expect($badgeDisplay['color_field'])->toBe('__owner_status_enum_color');
+});
+
+it('explicit accessor overrides dot-notation', function () {
+    $col = Column::make('owner.name', 'Owner')->accessor('custom_field');
+
+    expect($col->getName())->toBe('_owner_name')
+        ->and($col->getAccessor())->toBe('custom_field')
+        ->and($col->getSortKey())->toBe('custom_field');
+});
+
+it('multi-level dot-notation works', function () {
+    $col = Column::make('owner.address.city', 'City');
+
+    expect($col->getName())->toBe('_owner_address_city')
+        ->and($col->getAccessor())->toBe('owner.address.city');
+
+    $model = (object) ['owner' => (object) ['address' => (object) ['city' => 'London']]];
+    expect($col->getValue($model))->toBe('London');
+});
+
+it('data() factory supports dot-notation', function () {
+    $col = Column::data('owner.name');
+
+    expect($col->getName())->toBe('_owner_name')
+        ->and($col->getAccessor())->toBe('owner.name')
+        ->and($col->isHidden())->toBeTrue();
+});
+
+it('name without dots is unchanged', function () {
+    $col = Column::make('simple_name', 'Simple');
+
+    expect($col->getName())->toBe('simple_name')
+        ->and($col->getAccessor())->toBe('simple_name');
+});
