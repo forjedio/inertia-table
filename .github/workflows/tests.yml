@@ -103,11 +103,14 @@ jobs:
     needs: [frontend, tests]
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     name: Build & Commit Dist
+    permissions:
+      contents: write
 
     steps:
       - uses: actions/checkout@v6
         with:
           ref: main
+          token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
