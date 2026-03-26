@@ -5,7 +5,7 @@ import type { ReactNode, ComponentType, RefObject } from 'react';
 /** Union type for all cell display configurations from PHP Column::toArray() */
 export type CellDisplay =
     | { type: 'text'; key?: string }
-    | { type: 'badge'; key?: string; color_field?: string; variant?: string; tooltip_key?: string; icon_key?: string }
+    | { type: 'badge'; key?: string; color_field?: string; variant?: string; variant_key?: string; tooltip_key?: string; icon_key?: string }
     | { type: 'date'; key?: string; formatted_key?: string; raw_key?: string; local?: boolean; includeTime?: boolean }
     | { type: 'link'; route?: string; params?: Record<string, string>; href_key?: string; key?: string; prefetch?: boolean }
     | { type: 'copyable'; key?: string }
