@@ -107,18 +107,64 @@ it('adds badge display with closure tooltip', function () {
     expect($arr['displays'][0]['tooltip_key'])->toBe('_status_d0_tooltip_key');
 });
 
-it('adds date display', function () {
+it('adds date display with formatted_key and raw_key', function () {
     $col = Column::make('created_at', 'Created')->date();
     $arr = $col->toArray();
 
-    expect($arr['displays'][0]['type'])->toBe('date');
+    expect($arr['displays'][0]['type'])->toBe('date')
+        ->and($arr['displays'][0])->toHaveKey('formatted_key')
+        ->and($arr['displays'][0])->toHaveKey('raw_key');
 });
 
-it('adds date display with format', function () {
-    $col = Column::make('created_at', 'Created')->date(format: 'DD/MM/YYYY');
+it('date display resolves PHP-formatted value and raw ISO', function () {
+    $col = Column::make('created_at', 'Created')->date(format: 'd/m/Y');
+
+    $model = (object) ['created_at' => '2027-03-01 10:30:00'];
+    $displayValues = $col->resolveDisplayValues($model);
+
+    $arr = $col->toArray();
+    $formattedKey = $arr['displays'][0]['formatted_key'];
+    $rawKey = $arr['displays'][0]['raw_key'];
+
+    expect($displayValues[$formattedKey])->toBe('01/03/2027')
+        ->and($displayValues[$rawKey])->toContain('2027-03-01T');
+});
+
+it('date display returns null for null values', function () {
+    $col = Column::make('created_at', 'Created')->date();
+
+    $model = (object) ['created_at' => null];
+    $displayValues = $col->resolveDisplayValues($model);
+
+    $arr = $col->toArray();
+    $formattedKey = $arr['displays'][0]['formatted_key'];
+    $rawKey = $arr['displays'][0]['raw_key'];
+
+    expect($displayValues[$formattedKey])->toBeNull()
+        ->and($displayValues[$rawKey])->toBeNull();
+});
+
+it('date display with local flag', function () {
+    $col = Column::make('created_at', 'Created')->date(local: true);
     $arr = $col->toArray();
 
-    expect($arr['displays'][0]['format'])->toBe('DD/MM/YYYY');
+    expect($arr['displays'][0]['local'])->toBeTrue();
+});
+
+it('date display does not set local by default', function () {
+    $col = Column::make('created_at', 'Created')->date();
+    $arr = $col->toArray();
+
+    expect($arr['displays'][0])->not->toHaveKey('local');
+});
+
+it('date display does not overwrite valueResolver', function () {
+    $col = Column::make('custom', 'Custom')
+        ->value(fn ($m) => $m->label)
+        ->date();
+
+    $model = (object) ['custom' => '2027-03-01', 'label' => 'My Label'];
+    expect($col->getValue($model))->toBe('My Label');
 });
 
 it('adds link display with route and params', function () {

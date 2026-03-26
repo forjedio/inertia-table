@@ -7,3 +7,8 @@ coverage.xml
 .vscode/
 .DS_Store
 *.swp
+*.tsbuildinfo
+vue/node_modules/
+vue/coverage/
+react/node_modules/
+react/coverage/

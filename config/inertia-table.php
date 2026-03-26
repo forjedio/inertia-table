@@ -16,7 +16,7 @@ return [
     |--------------------------------------------------------------------------
     | Default date format passed to the frontend for date display cells.
     */
-    'date_format' => 'YYYY-MM-DD HH:mm:ss',
+    'date_format' => 'Y-m-d H:i:s',
 
     /*
     |--------------------------------------------------------------------------

@@ -1,0 +1,8 @@
+/tests                export-ignore
+/vue/tests            export-ignore
+/vue/node_modules     export-ignore
+/react/tests          export-ignore
+/react/node_modules   export-ignore
+/.github              export-ignore
+phpstan.neon          export-ignore
+phpunit.xml.dist      export-ignore

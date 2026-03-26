@@ -1,0 +1,72 @@
+{
+    "name": "inertia-table-react",
+    "version": "1.0.0",
+    "description": "React components for Forjed Inertia Table - backend-driven dynamic tables for Laravel + Inertia.js",
+    "license": "MIT",
+    "author": "Forjed <packages@forjed.io> (https://forjed.io)",
+    "homepage": "https://inertia-table.forjed.io/",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/forjedio/inertia-table.git",
+        "directory": "react"
+    },
+    "keywords": [
+        "react",
+        "laravel",
+        "inertia",
+        "tables",
+        "dynamic-tables",
+        "datatable",
+        "tanstack-table"
+    ],
+    "type": "module",
+    "main": "./dist/index.cjs",
+    "module": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js",
+            "require": "./dist/index.cjs"
+        }
+    },
+    "sideEffects": false,
+    "peerDependencies": {
+        "@inertiajs/react": "^2.0",
+        "@tanstack/react-table": "^8.0",
+        "react": "^18.0 || ^19.0",
+        "react-dom": "^18.0 || ^19.0",
+        "tailwindcss": "^3.4 || ^4.0",
+        "ziggy-js": "^2.0"
+    },
+    "peerDependenciesMeta": {
+        "ziggy-js": {
+            "optional": true
+        }
+    },
+    "devDependencies": {
+        "@inertiajs/react": "^2.0",
+        "@tanstack/react-table": "^8.0",
+        "@testing-library/jest-dom": "^6.0",
+        "@testing-library/react": "^16.0",
+        "@types/react": "^18.0",
+        "@types/react-dom": "^18.0",
+        "jsdom": "^25.0",
+        "react": "^18.0",
+        "react-dom": "^18.0",
+        "typescript": "^5.5",
+        "vite": "^6.0",
+        "vite-plugin-dts": "^4.0",
+        "@vitest/coverage-v8": "^3.0",
+        "vitest": "^3.0",
+        "ziggy-js": "^2.0"
+    },
+    "scripts": {
+        "build": "vite build",
+        "dev": "vite build --watch",
+        "test": "vitest run",
+        "test:watch": "vitest",
+        "typecheck": "tsc --noEmit",
+        "pre-commit": "npm run typecheck && npm test"
+    }
+}

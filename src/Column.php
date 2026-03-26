@@ -168,13 +168,51 @@ class Column
         return $this;
     }
 
-    public function date(string|Closure|null $value = null, ?string $format = null): static
+    public function date(string|Closure|null $value = null, ?string $format = null, bool $local = false): static
     {
         $display = ['type' => 'date'];
-        $this->resolveDisplayValue($display, $value, 'key');
+        $accessor = $this->accessor ?? $this->name;
+        $phpFormat = $format ?? config('inertia-table.date_format', 'Y-m-d H:i:s');
+        $displayIndex = count($this->displays);
 
-        if ($format) {
-            $display['format'] = $format;
+        $valueSource = $value instanceof Closure ? $value : function ($model) use ($value, $accessor) {
+            return data_get($model, $value ?? $accessor);
+        };
+
+        // Display resolver: PHP-formatted date
+        $formattedKey = "_{$this->name}_d{$displayIndex}_formatted";
+        $this->displayResolvers[] = [
+            'key' => $formattedKey,
+            'resolver' => function ($model) use ($valueSource, $phpFormat) {
+                $raw = $valueSource($model);
+                if ($raw === null) {
+                    return null;
+                }
+                $date = $raw instanceof \DateTimeInterface ? $raw : new \DateTime($raw);
+
+                return $date->format($phpFormat);
+            },
+        ];
+        $display['formatted_key'] = $formattedKey;
+
+        // Display resolver: raw ISO date (always sent for potential frontend locale formatting)
+        $rawKey = "_{$this->name}_d{$displayIndex}_raw";
+        $this->displayResolvers[] = [
+            'key' => $rawKey,
+            'resolver' => function ($model) use ($valueSource) {
+                $raw = $valueSource($model);
+                if ($raw === null) {
+                    return null;
+                }
+                $date = $raw instanceof \DateTimeInterface ? $raw : new \DateTime($raw);
+
+                return $date->format('c');
+            },
+        ];
+        $display['raw_key'] = $rawKey;
+
+        if ($local) {
+            $display['local'] = true;
         }
 
         $this->displays[] = $display;

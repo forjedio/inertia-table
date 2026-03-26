@@ -77,11 +77,37 @@ it('DateColumn auto-adds date display', function () {
         ->and($arr['displays'][0]['type'])->toBe('date');
 });
 
-it('DateColumn supports format() fluent setter', function () {
-    $col = DateColumn::make('created_at', 'Created')->format('DD/MM/YYYY');
+it('DateColumn resolves PHP-formatted date', function () {
+    $col = DateColumn::make('created_at', 'Created')->format('d/m/Y');
+
+    $model = (object) ['created_at' => '2027-03-01 10:30:00'];
+    $displayValues = $col->resolveDisplayValues($model);
+
+    $arr = $col->toArray();
+    $formattedKey = $arr['displays'][0]['formatted_key'];
+
+    expect($displayValues[$formattedKey])->toBe('01/03/2027');
+});
+
+it('DateColumn format() rebuilds display resolvers', function () {
+    $col = DateColumn::make('created_at', 'Created');
+    $col->format('Y');
+
+    $model = (object) ['created_at' => '2027-03-01'];
+    $displayValues = $col->resolveDisplayValues($model);
+
+    $arr = $col->toArray();
+    $formattedKey = $arr['displays'][0]['formatted_key'];
+
+    expect($displayValues[$formattedKey])->toBe('2027');
+});
+
+it('DateColumn supports toLocal()', function () {
+    $col = DateColumn::make('created_at', 'Created')->toLocal();
     $arr = $col->toArray();
 
-    expect($arr['displays'][0]['format'])->toBe('DD/MM/YYYY');
+    expect($arr['displays'][0]['local'])->toBeTrue()
+        ->and($arr['displays'][0])->not->toHaveKey('includeTime');
 });
 
 it('DateColumn is sortable via chaining', function () {
@@ -99,20 +125,46 @@ it('DateColumn can add additional displays', function () {
         ->and($arr['displays'][1]['type'])->toBe('copyable');
 });
 
-it('DateTimeColumn auto-adds date display with datetime format', function () {
+it('DateTimeColumn auto-adds date display with formatted_key', function () {
     $col = DateTimeColumn::make('created_at', 'Created');
     $arr = $col->toArray();
 
     expect($arr['displays'])->toHaveCount(1)
         ->and($arr['displays'][0]['type'])->toBe('date')
-        ->and($arr['displays'][0]['format'])->toBe('YYYY-MM-DD HH:mm:ss');
+        ->and($arr['displays'][0])->toHaveKey('formatted_key')
+        ->and($arr['displays'][0])->toHaveKey('raw_key');
+});
+
+it('DateTimeColumn formats with datetime format', function () {
+    $col = DateTimeColumn::make('created_at', 'Created');
+
+    $model = (object) ['created_at' => '2027-03-01 10:30:45'];
+    $displayValues = $col->resolveDisplayValues($model);
+
+    $arr = $col->toArray();
+    $formattedKey = $arr['displays'][0]['formatted_key'];
+
+    expect($displayValues[$formattedKey])->toBe('2027-03-01 10:30:45');
 });
 
 it('DateTimeColumn format can be overridden', function () {
-    $col = DateTimeColumn::make('created_at', 'Created')->format('HH:mm DD/MM');
+    $col = DateTimeColumn::make('created_at', 'Created')->format('H:i d/m');
+
+    $model = (object) ['created_at' => '2027-03-01 10:30:00'];
+    $displayValues = $col->resolveDisplayValues($model);
+
+    $arr = $col->toArray();
+    $formattedKey = $arr['displays'][0]['formatted_key'];
+
+    expect($displayValues[$formattedKey])->toBe('10:30 01/03');
+});
+
+it('DateTimeColumn toLocal sets includeTime', function () {
+    $col = DateTimeColumn::make('created_at', 'Created')->toLocal();
     $arr = $col->toArray();
 
-    expect($arr['displays'][0]['format'])->toBe('HH:mm DD/MM');
+    expect($arr['displays'][0]['local'])->toBeTrue()
+        ->and($arr['displays'][0]['includeTime'])->toBeTrue();
 });
 
 it('LinkColumn requires route() to add link display', function () {
