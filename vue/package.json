@@ -1,0 +1,67 @@
+{
+    "name": "inertia-table-vue",
+    "version": "1.0.0",
+    "description": "Vue 3 components for Forjed Inertia Table - backend-driven dynamic tables for Laravel + Inertia.js",
+    "license": "MIT",
+    "author": "Forjed <packages@forjed.io> (https://forjed.io)",
+    "homepage": "https://inertia-table.forjed.io/",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/forjedio/inertia-table.git",
+        "directory": "vue"
+    },
+    "keywords": [
+        "vue",
+        "vue3",
+        "laravel",
+        "inertia",
+        "tables",
+        "dynamic-tables",
+        "datatable"
+    ],
+    "type": "module",
+    "main": "./dist/index.cjs",
+    "module": "./dist/index.js",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js",
+            "require": "./dist/index.cjs"
+        }
+    },
+    "sideEffects": false,
+    "peerDependencies": {
+        "@inertiajs/vue3": "^2.0",
+        "vue": "^3.4",
+        "tailwindcss": "^3.4 || ^4.0",
+        "ziggy-js": "^2.0"
+    },
+    "peerDependenciesMeta": {
+        "ziggy-js": {
+            "optional": true
+        }
+    },
+    "devDependencies": {
+        "@inertiajs/vue3": "^2.0",
+        "@vitejs/plugin-vue": "^5.0",
+        "@vitest/coverage-v8": "^3.0",
+        "@vue/test-utils": "^2.0",
+        "jsdom": "^25.0",
+        "typescript": "^5.5",
+        "vite": "^6.0",
+        "vite-plugin-dts": "^4.0",
+        "vitest": "^3.0",
+        "vue": "^3.4",
+        "vue-tsc": "^2.0",
+        "ziggy-js": "^2.0"
+    },
+    "scripts": {
+        "build": "vite build",
+        "dev": "vite build --watch",
+        "test": "vitest run",
+        "test:watch": "vitest",
+        "typecheck": "vue-tsc --noEmit",
+        "pre-commit": "npm run typecheck && npm test"
+    }
+}

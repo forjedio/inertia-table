@@ -8,10 +8,12 @@ class DateColumn extends Column
 {
     protected ?string $format = null;
 
+    protected bool $local = false;
+
     public static function make(string $name, string $header): static
     {
         $col = new static($name, $header);
-        $col->date();
+        $col->applyDateDisplay();
 
         return $col;
     }
@@ -19,13 +21,23 @@ class DateColumn extends Column
     public function format(string $format): static
     {
         $this->format = $format;
-
-        // Replace the last date display with the updated format
-        $lastIndex = array_key_last($this->displays);
-        if ($lastIndex !== null && $this->displays[$lastIndex]['type'] === 'date') {
-            $this->displays[$lastIndex]['format'] = $format;
-        }
+        $this->applyDateDisplay();
 
         return $this;
+    }
+
+    public function toLocal(bool $local = true): static
+    {
+        $this->local = $local;
+        $this->applyDateDisplay();
+
+        return $this;
+    }
+
+    protected function applyDateDisplay(): void
+    {
+        $this->displays = [];
+        $this->displayResolvers = [];
+        $this->date(format: $this->format, local: $this->local);
     }
 }

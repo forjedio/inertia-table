@@ -56,7 +56,7 @@ function createIntegrationTable($query = null, array $settings = [])
 
                 Column::make('created_at', 'Created')
                     ->sortable()
-                    ->date(format: 'DD/MM/YYYY'),
+                    ->date(format: 'd/m/Y'),
 
                 Column::make('combined', 'Combined')
                     ->value(fn ($m) => "{$m->name} ({$m->email})")
@@ -106,7 +106,7 @@ afterEach(function () {
 it('produces complete table output with correct structure', function () {
     $result = createIntegrationTable()->simplePaginate();
 
-    expect($result)->toHaveKeys(['columns', 'data', 'links', 'meta', 'searchable', 'searchDebounce', 'dateFormat', 'tableSettings', 'identifier'])
+    expect($result)->toHaveKeys(['columns', 'data', 'links', 'meta', 'searchable', 'searchDebounce', 'tableSettings', 'identifier'])
         ->and($result['columns'])->toBeArray()
         ->and($result['data'])->toBeArray()
         ->and($result['links'])->toBeArray()
@@ -209,14 +209,22 @@ it('badge display serialises color_field', function () {
         ->color_field->toBe('status_color');
 });
 
-it('date display serialises format', function () {
+it('date display serialises formatted_key and raw_key', function () {
     $result = createIntegrationTable()->simplePaginate();
 
     $dateCol = collect($result['columns'])->firstWhere('name', 'created_at');
 
     expect($dateCol['displays'][0])
         ->type->toBe('date')
-        ->format->toBe('DD/MM/YYYY');
+        ->and($dateCol['displays'][0])->toHaveKey('formatted_key')
+        ->and($dateCol['displays'][0])->toHaveKey('raw_key');
+
+    $formattedKey = $dateCol['displays'][0]['formatted_key'];
+    $rawKey = $dateCol['displays'][0]['raw_key'];
+
+    $firstRow = $result['data'][0];
+    expect($firstRow[$formattedKey])->toBe('01/01/2024')
+        ->and($firstRow[$rawKey])->toContain('2024-01-01T');
 });
 
 it('copyable display serialises correctly', function () {

@@ -188,7 +188,6 @@ abstract class Table
             'meta' => $this->buildMeta($paginated),
             'searchable' => count($this->searchable()) > 0,
             'searchDebounce' => config('inertia-table.search_debounce', 300),
-            'dateFormat' => config('inertia-table.date_format', 'YYYY-MM-DD HH:mm:ss'),
             'identifier' => $this->identifier,
             'tableSettings' => $this->tableSettings,
         ];

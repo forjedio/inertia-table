@@ -49,7 +49,7 @@ it('returns correct top-level keys from toArray', function () {
     $result = createTestTable()->simplePaginate();
 
     expect($result)->toHaveKeys([
-        'columns', 'data', 'links', 'meta', 'searchable', 'searchDebounce', 'dateFormat', 'tableSettings', 'identifier',
+        'columns', 'data', 'links', 'meta', 'searchable', 'searchDebounce', 'tableSettings', 'identifier',
     ]);
 });
 
