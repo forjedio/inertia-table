@@ -4,14 +4,14 @@ import { useReactTable as te, createColumnHelper as re, getCoreRowModel as ne, f
 import { router as W, Link as oe } from "@inertiajs/react";
 function P(e, t = "page") {
   const r = new URL(window.location.href);
-  for (const [n, a] of Object.entries(e))
-    a === null ? r.searchParams.delete(n) : r.searchParams.set(n, a);
+  for (const [n, i] of Object.entries(e))
+    i === null ? r.searchParams.delete(n) : r.searchParams.set(n, i);
   t in e || r.searchParams.delete(t), W.get(r.toString(), {}, { preserveState: !0, preserveScroll: !0 });
 }
 function ae(e, t, r, o) {
-  const [n, a] = V(() => typeof window > "u" ? "" : new URLSearchParams(window.location.search).get(t) ?? ""), s = $(null), c = H(
+  const [n, i] = V(() => typeof window > "u" ? "" : new URLSearchParams(window.location.search).get(t) ?? ""), a = $(null), c = H(
     (u) => {
-      a(u), s.current && clearTimeout(s.current), s.current = setTimeout(() => {
+      i(u), a.current && clearTimeout(a.current), a.current = setTimeout(() => {
         P(
           { [t]: u || null },
           r
@@ -21,7 +21,7 @@ function ae(e, t, r, o) {
     [e, t, r]
   );
   return R(() => () => {
-    s.current && clearTimeout(s.current);
+    a.current && clearTimeout(a.current);
   }, []), R(() => {
     if (!(o != null && o.current)) return;
     const u = o.current;
@@ -39,8 +39,8 @@ function ae(e, t, r, o) {
 function q(e) {
   return e ? e.startsWith("-") ? { sortBy: e.slice(1), sortDir: "desc" } : { sortBy: e, sortDir: "asc" } : { sortBy: null, sortDir: "asc" };
 }
-function se(e, t) {
-  const r = typeof window < "u" ? window.location.search : "", o = new URLSearchParams(r), { sortBy: n, sortDir: a } = q(o.get(e)), s = H(
+function ie(e, t) {
+  const r = typeof window < "u" ? window.location.search : "", o = new URLSearchParams(r), { sortBy: n, sortDir: i } = q(o.get(e)), a = H(
     (u) => {
       const g = new URLSearchParams(window.location.search), { sortBy: m, sortDir: d } = q(g.get(e));
       P(m === u ? d === "asc" ? { [e]: `-${u}` } : { [e]: null } : { [e]: u }, t);
@@ -49,13 +49,13 @@ function se(e, t) {
   ), c = H(
     (u) => ({
       active: n === u,
-      direction: n === u ? a : null
+      direction: n === u ? i : null
     }),
-    [n, a]
+    [n, i]
   );
-  return { sortBy: n, sortDir: a, onSort: s, getSortState: c };
+  return { sortBy: n, sortDir: i, onSort: a, getSortState: c };
 }
-function ie(e) {
+function se(e) {
   return { onPageChange: H(
     (r) => {
       P({ [e]: String(r) }, e);
@@ -79,11 +79,11 @@ function le(e) {
     const o = [], n = () => {
       W.reload();
     };
-    for (const [a, s] of Object.entries(e.tableSettings)) {
-      const c = j.get(a) ?? [];
+    for (const [i, a] of Object.entries(e.tableSettings)) {
+      const c = j.get(i) ?? [];
       for (const u of c) {
         const m = u({
-          value: s,
+          value: a,
           tableData: e,
           refresh: n
         });
@@ -91,7 +91,7 @@ function le(e) {
       }
     }
     return () => {
-      o.forEach((a) => a());
+      o.forEach((i) => i());
     };
   }, [e]);
 }
@@ -122,13 +122,13 @@ const X = {
   gray: "bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300",
   outline: "bg-transparent text-gray-700 border border-gray-300 dark:text-gray-300 dark:border-gray-600"
 };
-function ue({ value: e, variant: t, colorField: r, tooltipKey: o, iconKey: n, row: a, nullText: s = "-", iconResolver: c }) {
+function ue({ value: e, variant: t, colorField: r, tooltipKey: o, iconKey: n, row: i, nullText: a = "-", iconResolver: c }) {
   if (e == null)
-    return /* @__PURE__ */ l("span", { className: "text-gray-400 dark:text-gray-500", children: s });
-  const u = r && a[r] ? String(a[r]) : t ?? "default", g = o ? a[o] : void 0, m = X[u] ?? X.default;
+    return /* @__PURE__ */ l("span", { className: "text-gray-400 dark:text-gray-500", children: a });
+  const u = r && i[r] ? String(i[r]) : t ?? "default", g = o ? i[o] : void 0, m = X[u] ?? X.default;
   let d = null;
   if (n) {
-    const y = a[n];
+    const y = i[n];
     y && (d = (c == null ? void 0 : c(y)) ?? K(y) ?? null);
   }
   return /* @__PURE__ */ T(
@@ -149,8 +149,8 @@ function de({ formattedValue: e, rawValue: t, local: r, includeTime: o }) {
   let n = e;
   if (r && t)
     try {
-      const a = new Date(t);
-      n = o ? new Intl.DateTimeFormat(void 0, { dateStyle: "medium", timeStyle: "short" }).format(a) : new Intl.DateTimeFormat(void 0, { dateStyle: "medium" }).format(a);
+      const i = new Date(t);
+      n = o ? new Intl.DateTimeFormat(void 0, { dateStyle: "medium", timeStyle: "short" }).format(i) : new Intl.DateTimeFormat(void 0, { dateStyle: "medium" }).format(i);
     } catch {
       n = e;
     }
@@ -160,8 +160,8 @@ function ge(e, t) {
   const r = {};
   for (const [o, n] of Object.entries(t))
     if (n.startsWith(":")) {
-      const a = n.slice(1);
-      r[o] = e[a];
+      const i = n.slice(1);
+      r[o] = e[i];
     } else
       r[o] = n;
   return r;
@@ -172,15 +172,15 @@ function fe(e, t) {
     `[inertia-table-react] Ziggy route() not found. Set 'use_ziggy' => false in config to resolve routes server-side, or install ziggy-js. Route: ${e}`
   ), "#");
 }
-function me({ value: e, route: t, params: r, resolvedHref: o, row: n, prefetch: a = !0, nullText: s = "-" }) {
+function me({ value: e, route: t, params: r, resolvedHref: o, row: n, prefetch: i = !0, nullText: a = "-" }) {
   if (e == null)
-    return /* @__PURE__ */ l("span", { className: "text-gray-400 dark:text-gray-500", children: s });
+    return /* @__PURE__ */ l("span", { className: "text-gray-400 dark:text-gray-500", children: a });
   const c = o ?? (t && r ? fe(t, ge(n, r)) : null);
   return c ? /* @__PURE__ */ l(
     oe,
     {
       href: c,
-      prefetch: a ? "hover" : void 0,
+      prefetch: i ? "hover" : void 0,
       className: "text-blue-600 hover:text-blue-800 hover:underline dark:text-blue-400 dark:hover:text-blue-300",
       children: String(e)
     }
@@ -191,7 +191,7 @@ function he({ value: e, nullText: t = "-" }) {
   p.useEffect(() => () => {
     n.current && clearTimeout(n.current);
   }, []);
-  const a = H(() => {
+  const i = H(() => {
     e != null && navigator.clipboard.writeText(String(e)).then(() => {
       o(!0), n.current && clearTimeout(n.current), n.current = setTimeout(() => o(!1), 2e3);
     }).catch(() => {
@@ -201,7 +201,7 @@ function he({ value: e, nullText: t = "-" }) {
     "button",
     {
       type: "button",
-      onClick: a,
+      onClick: i,
       className: `inline-flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium transition-colors ${r ? "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300" : "bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"}`,
       "aria-label": r ? "Copied!" : `Copy ${String(e)} to clipboard`,
       title: r ? "Copied!" : "Click to copy",
@@ -250,8 +250,8 @@ function be(e) {
     cellRenderers: r,
     headerRenderers: o,
     renderCell: n,
-    renderHeader: a,
-    onSort: s,
+    renderHeader: i,
+    onSort: a,
     getSortState: c,
     nullText: u,
     classNames: g,
@@ -260,34 +260,34 @@ function be(e) {
   d.current = e.actions;
   const y = $(c);
   y.current = c;
-  const C = $(s);
-  C.current = s;
+  const C = $(a);
+  C.current = a;
   const b = JSON.stringify(t.columns);
   return J(() => {
     const w = [];
-    for (const i of t.columns)
-      i.hidden || w.push({
-        id: i.name,
-        fit: i.fit ?? !1,
-        sortable: i.sortable,
+    for (const s of t.columns)
+      s.hidden || w.push({
+        id: s.name,
+        fit: s.fit ?? !1,
+        sortable: s.sortable,
         getAriaSort: () => {
-          if (!i.sortable) return;
-          const f = y.current(i.sort_key);
+          if (!s.sortable) return;
+          const f = y.current(s.sort_key);
           return f.active ? f.direction === "asc" ? "ascending" : "descending" : "none";
         },
         renderHeader: () => {
-          const f = y.current(i.sort_key), k = C.current, N = {
-            column: i,
+          const f = y.current(s.sort_key), k = C.current, N = {
+            column: s,
             sortState: f,
             onSort: k,
             index: w.length
           };
-          if (o != null && o[i.name])
-            return o[i.name](N);
-          if (a)
-            return a(N);
+          if (o != null && o[s.name])
+            return o[s.name](N);
+          if (i)
+            return i(N);
           let x = null;
-          return i.sortable && (f.active ? x = p.createElement(
+          return s.sortable && (f.active ? x = p.createElement(
             "svg",
             { className: "ml-1 h-3.5 w-3.5 inline-block", viewBox: "0 0 16 16", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round" },
             p.createElement("path", { d: f.direction === "asc" ? "M4 10l4-4 4 4" : "M4 6l4 4 4-4" })
@@ -300,29 +300,29 @@ function be(e) {
             {
               className: [
                 "flex items-center gap-1 -m-4 p-4",
-                i.sortable ? g.thSortable : "",
+                s.sortable ? g.thSortable : "",
                 f.active ? g.thSorted : ""
               ].filter(Boolean).join(" "),
-              onClick: i.sortable ? () => k(i.sort_key) : void 0
+              onClick: s.sortable ? () => k(s.sort_key) : void 0
             },
-            i.header,
+            s.header,
             x
           );
         },
         renderCell: (f, k) => {
           var E;
-          if (i.displays.length === 1 && i.displays[0].type === "actions")
+          if (s.displays.length === 1 && s.displays[0].type === "actions")
             return ((E = d.current) == null ? void 0 : E.call(d, f)) ?? null;
-          const N = f[i.name], x = {
+          const N = f[s.name], x = {
             row: f,
             value: N,
-            column: i,
-            displays: i.displays,
+            column: s,
+            displays: s.displays,
             rowIndex: k
           };
-          if (r != null && r[i.name])
-            return r[i.name](x);
-          const B = () => ke(i.displays, f, i.name, u, m);
+          if (r != null && r[s.name])
+            return r[s.name](x);
+          const B = () => ke(s.displays, f, s.name, u, m);
           return n ? n({ ...x, defaultRender: B }) : B();
         }
       });
@@ -340,28 +340,28 @@ function be(e) {
         return ((k = d.current) == null ? void 0 : k.call(d, f)) ?? null;
       }
     })), w;
-  }, [b, r, o, n, a, u, g, m]);
+  }, [b, r, o, n, i, u, g, m]);
 }
 function ke(e, t, r, o, n) {
   if (!e || e.length === 0)
     return p.createElement(Q, { value: t[r], nullText: o });
   if (e.length === 1 && e[0].type === "component") {
-    const s = e[0];
-    return p.createElement(Y, { componentName: s.component, row: t, columnName: r });
+    const a = e[0];
+    return p.createElement(Y, { componentName: a.component, row: t, columnName: r });
   }
-  const a = e.map((s, c) => {
-    const u = ce(t, s, r);
-    switch (s.type) {
+  const i = e.map((a, c) => {
+    const u = ce(t, a, r);
+    switch (a.type) {
       case "text":
         return p.createElement(Q, { key: c, value: u, nullText: o });
       case "badge":
         return p.createElement(ue, {
           key: c,
           value: u,
-          variant: s.variant,
-          colorField: s.color_field,
-          tooltipKey: s.tooltip_key,
-          iconKey: s.icon_key,
+          variant: a.variant_key ? String(t[a.variant_key] ?? "") : a.variant,
+          colorField: a.color_field,
+          tooltipKey: a.tooltip_key,
+          iconKey: a.icon_key,
           row: t,
           nullText: o,
           iconResolver: n
@@ -369,21 +369,21 @@ function ke(e, t, r, o, n) {
       case "date":
         return p.createElement(de, {
           key: c,
-          formattedValue: s.formatted_key ? t[s.formatted_key] : u,
-          rawValue: s.raw_key ? t[s.raw_key] : null,
-          local: s.local ?? !1,
-          includeTime: s.includeTime ?? !1
+          formattedValue: a.formatted_key ? t[a.formatted_key] : u,
+          rawValue: a.raw_key ? t[a.raw_key] : null,
+          local: a.local ?? !1,
+          includeTime: a.includeTime ?? !1
         });
       case "link": {
-        const g = s.href_key ? t[s.href_key] : void 0;
+        const g = a.href_key ? t[a.href_key] : void 0;
         return p.createElement(me, {
           key: c,
           value: u,
-          route: s.route,
-          params: s.params,
+          route: a.route,
+          params: a.params,
           resolvedHref: g != null ? String(g) : void 0,
           row: t,
-          prefetch: s.prefetch,
+          prefetch: a.prefetch,
           nullText: o
         });
       }
@@ -394,7 +394,7 @@ function ke(e, t, r, o, n) {
       case "component":
         return p.createElement(Y, {
           key: c,
-          componentName: s.component,
+          componentName: a.component,
           row: t,
           columnName: r
         });
@@ -402,7 +402,7 @@ function ke(e, t, r, o, n) {
         return null;
     }
   });
-  return a.length > 1 ? p.createElement("div", { className: "flex items-center gap-2" }, ...a) : a[0] ?? null;
+  return i.length > 1 ? p.createElement("div", { className: "flex items-center gap-2" }, ...i) : i[0] ?? null;
 }
 const xe = re(), Se = ne(), ve = {
   wrapper: "rounded-lg border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-900",
@@ -431,8 +431,8 @@ function Ce(e) {
     cellRenderers: r,
     headerRenderers: o,
     actions: n,
-    renderCell: a,
-    renderHeader: s,
+    renderCell: i,
+    renderHeader: a,
     classNames: c,
     nullText: u = "-",
     iconResolver: g
@@ -441,13 +441,13 @@ function Ce(e) {
     // Only recompute when overrides actually change (by value)
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [JSON.stringify(c)]
-  ), d = t.identifier ?? null, y = G(d, "Search", "search"), C = G(d, "Sort", "sort"), b = G(d, "Page", "page"), { onPageChange: w } = ie(b), { searchTerm: i, onSearch: f, hasExternalSearch: k } = ae(t.searchDebounce, y, b, e.searchRef), { sortBy: N, sortDir: x, onSort: B, getSortState: E } = se(C, b), L = be({
+  ), d = t.identifier ?? null, y = G(d, "Search", "search"), C = G(d, "Sort", "sort"), b = G(d, "Page", "page"), { onPageChange: w } = se(b), { searchTerm: s, onSearch: f, hasExternalSearch: k } = ae(t.searchDebounce, y, b, e.searchRef), { sortBy: N, sortDir: x, onSort: B, getSortState: E } = ie(C, b), L = be({
     tableData: t,
     cellRenderers: r,
     headerRenderers: o,
     actions: n,
-    renderCell: a,
-    renderHeader: s,
+    renderCell: i,
+    renderHeader: a,
     onSort: B,
     getSortState: E,
     nullText: u,
@@ -473,7 +473,7 @@ function Ce(e) {
     table: M,
     columns: L,
     classNames: m,
-    searchTerm: i,
+    searchTerm: s,
     onSearch: f,
     hasExternalSearch: k,
     sortBy: N,
@@ -485,19 +485,19 @@ function Ce(e) {
   };
 }
 function we(e, t, r, o) {
-  const [n, a] = V(!1), s = $(e.data);
+  const [n, i] = V(!1), a = $(e.data);
   return R(() => {
-    s.current !== e.data && (s.current = e.data, a(!1));
+    a.current !== e.data && (a.current = e.data, i(!1));
   }, [e.data]), R(() => {
     const c = [t, r, o], u = W.on("start", (m) => {
       try {
         const d = new URL(m.detail.visit.url), y = new URL(window.location.href);
-        c.some((b) => d.searchParams.get(b) !== y.searchParams.get(b)) && a(!0);
+        c.some((b) => d.searchParams.get(b) !== y.searchParams.get(b)) && i(!0);
       } catch {
-        a(!0);
+        i(!0);
       }
     }), g = W.on("finish", () => {
-      a(!1);
+      i(!1);
     });
     return () => {
       u(), g();
@@ -538,7 +538,7 @@ function Ne({ searchTerm: e, onSearch: t, placeholder: r = "Search...", classNam
   ] });
 }
 function Ee({ links: e, meta: t, onPageChange: r, isFetching: o, classNames: n }) {
-  const a = e.prev !== null, s = e.next !== null;
+  const i = e.prev !== null, a = e.next !== null;
   let c;
   return t.from !== null && t.to !== null ? t.total !== void 0 ? c = `Showing ${t.from} to ${t.to} of ${t.total} results` : c = `Showing ${t.from} to ${t.to} results` : c = "No results", /* @__PURE__ */ T("nav", { className: n.pagination, "aria-label": "Table pagination", children: [
     /* @__PURE__ */ l("span", { className: n.paginationInfo, children: c }),
@@ -548,7 +548,7 @@ function Ee({ links: e, meta: t, onPageChange: r, isFetching: o, classNames: n }
         {
           type: "button",
           onClick: () => r(1),
-          disabled: !a || o,
+          disabled: !i || o,
           className: n.paginationButton,
           "aria-label": "Go to first page",
           children: "First"
@@ -559,7 +559,7 @@ function Ee({ links: e, meta: t, onPageChange: r, isFetching: o, classNames: n }
         {
           type: "button",
           onClick: () => r(t.current_page - 1),
-          disabled: !a || o,
+          disabled: !i || o,
           className: n.paginationButton,
           "aria-label": "Go to previous page",
           children: "Previous"
@@ -570,7 +570,7 @@ function Ee({ links: e, meta: t, onPageChange: r, isFetching: o, classNames: n }
         {
           type: "button",
           onClick: () => r(t.current_page + 1),
-          disabled: !s || o,
+          disabled: !a || o,
           className: n.paginationButton,
           "aria-label": "Go to next page",
           children: "Next"
@@ -581,7 +581,7 @@ function Ee({ links: e, meta: t, onPageChange: r, isFetching: o, classNames: n }
         {
           type: "button",
           onClick: () => r(t.last_page),
-          disabled: !s || o,
+          disabled: !a || o,
           className: n.paginationButton,
           "aria-label": "Go to last page",
           children: "Last"
@@ -599,8 +599,8 @@ function Re(e) {
     className: r,
     modal: o,
     onRowClick: n,
-    rowClassName: a,
-    isFetching: s = !1,
+    rowClassName: i,
+    isFetching: a = !1,
     emptyText: c,
     renderToolbar: u,
     renderToolbarActions: g,
@@ -611,16 +611,16 @@ function Re(e) {
   } = e, {
     table: b,
     columns: w,
-    classNames: i,
+    classNames: s,
     searchTerm: f,
     onSearch: k,
     hasExternalSearch: N,
     onPageChange: x,
     isProcessing: B
-  } = Ce(e), E = t.data.length > 0, L = t.searchable && !N, I = s || B, M = n ? (h, S) => {
+  } = Ce(e), E = t.data.length > 0, L = t.searchable && !N, I = a || B, M = n ? (h, S) => {
     S.target.closest('a, button, input, select, textarea, [role="button"]') || n(h);
   } : void 0, A = new Set(w.filter((h) => h.fit).map((h) => h.id)), D = b.getAllColumns().length, U = [
-    o ? "" : i.wrapper,
+    o ? "" : s.wrapper,
     r ?? ""
   ].filter(Boolean).join(" ");
   return /* @__PURE__ */ T("div", { className: U, children: [
@@ -629,35 +629,35 @@ function Re(e) {
       searchTerm: f,
       onSearch: k,
       children: (g == null ? void 0 : g()) ?? null
-    }) : /* @__PURE__ */ T("div", { className: i.toolbar, children: [
+    }) : /* @__PURE__ */ T("div", { className: s.toolbar, children: [
       L && (m ? m({ searchTerm: f, onSearch: k, placeholder: "Search..." }) : /* @__PURE__ */ l(
         Ne,
         {
           searchTerm: f,
           onSearch: k,
-          className: i.search
+          className: s.search
         }
       )),
       g == null ? void 0 : g()
     ] })),
-    /* @__PURE__ */ l("div", { className: `overflow-x-auto transition-opacity duration-150${I ? " opacity-50 pointer-events-none" : ""}`, "aria-busy": I, children: /* @__PURE__ */ T("table", { className: i.table, children: [
-      /* @__PURE__ */ l("thead", { className: i.thead, children: b.getHeaderGroups().map((h) => /* @__PURE__ */ l("tr", { children: h.headers.map((S) => {
+    /* @__PURE__ */ l("div", { className: `overflow-x-auto transition-opacity duration-150${I ? " opacity-50 pointer-events-none" : ""}`, "aria-busy": I, children: /* @__PURE__ */ T("table", { className: s.table, children: [
+      /* @__PURE__ */ l("thead", { className: s.thead, children: b.getHeaderGroups().map((h) => /* @__PURE__ */ l("tr", { children: h.headers.map((S) => {
         const _ = w.find((F) => F.id === S.column.id), O = _ == null ? void 0 : _.getAriaSort();
         return /* @__PURE__ */ l(
           "th",
           {
-            className: `${i.th}${A.has(S.column.id) ? " w-0 whitespace-nowrap" : ""}`,
+            className: `${s.th}${A.has(S.column.id) ? " w-0 whitespace-nowrap" : ""}`,
             "aria-sort": O,
             children: S.isPlaceholder ? null : Z(S.column.columnDef.header, S.getContext())
           },
           S.id
         );
       }) }, h.id)) }),
-      /* @__PURE__ */ l("tbody", { className: i.tbody, children: E ? b.getRowModel().rows.map((h, S) => {
+      /* @__PURE__ */ l("tbody", { className: s.tbody, children: E ? b.getRowModel().rows.map((h, S) => {
         const _ = [
-          i.tr,
-          n ? i.trClickable : "",
-          (a == null ? void 0 : a(h.original, S)) ?? ""
+          s.tr,
+          n ? s.trClickable : "",
+          (i == null ? void 0 : i(h.original, S)) ?? ""
         ].filter(Boolean).join(" "), O = M ? {
           role: "button",
           tabIndex: 0,
@@ -665,7 +665,7 @@ function Re(e) {
           onKeyDown: (v) => {
             (v.key === "Enter" || v.key === " ") && (v.preventDefault(), n(h.original));
           }
-        } : {}, F = h.getVisibleCells().map((v) => /* @__PURE__ */ l("td", { className: `${i.td}${A.has(v.column.id) ? " w-0 whitespace-nowrap" : ""}`, children: Z(v.column.columnDef.cell, v.getContext()) }, v.id));
+        } : {}, F = h.getVisibleCells().map((v) => /* @__PURE__ */ l("td", { className: `${s.td}${A.has(v.column.id) ? " w-0 whitespace-nowrap" : ""}`, children: Z(v.column.columnDef.cell, v.getContext()) }, v.id));
         return C ? /* @__PURE__ */ l(p.Fragment, { children: C({
           row: h.original,
           children: /* @__PURE__ */ l("tr", { className: _, ...O, children: F }),
@@ -676,7 +676,7 @@ function Re(e) {
         {
           colSpan: D,
           emptyText: c,
-          className: i.empty
+          className: s.empty
         }
       ) })
     ] }) }),
@@ -693,9 +693,9 @@ function Re(e) {
         onPageChange: x,
         isFetching: I,
         classNames: {
-          pagination: i.pagination,
-          paginationButton: i.paginationButton,
-          paginationInfo: i.paginationInfo
+          pagination: s.pagination,
+          paginationButton: s.paginationButton,
+          paginationInfo: s.paginationInfo
         }
       }
     ))

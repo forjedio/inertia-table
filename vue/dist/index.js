@@ -1,21 +1,21 @@
-import { ref as O, onUnmounted as j, watch as z, defineComponent as C, openBlock as g, createElementBlock as m, toDisplayString as w, computed as y, normalizeClass as h, createBlock as A, resolveDynamicComponent as G, createCommentVNode as $, createTextVNode as J, unref as d, withCtx as ne, h as p, createElementVNode as x, useSlots as ae, renderSlot as F, createVNode as D, Fragment as U, renderList as M, mergeProps as re } from "vue";
+import { ref as O, onUnmounted as j, watch as z, defineComponent as C, openBlock as g, createElementBlock as m, toDisplayString as w, computed as y, normalizeClass as h, createBlock as A, resolveDynamicComponent as G, createCommentVNode as $, createTextVNode as _, unref as d, withCtx as ne, h as p, createElementVNode as x, useSlots as ae, renderSlot as F, createVNode as D, Fragment as U, renderList as M, mergeProps as re } from "vue";
 import { router as L, Link as oe } from "@inertiajs/vue3";
-function I(e, n = "page") {
-  const t = new URL(window.location.href);
+function I(e, t = "page") {
+  const n = new URL(window.location.href);
   for (const [a, s] of Object.entries(e))
-    s === null ? t.searchParams.delete(a) : t.searchParams.set(a, s);
-  n in e || t.searchParams.delete(n), L.get(t.toString(), {}, { preserveState: !0, preserveScroll: !0 });
+    s === null ? n.searchParams.delete(a) : n.searchParams.set(a, s);
+  t in e || n.searchParams.delete(t), L.get(n.toString(), {}, { preserveState: !0, preserveScroll: !0 });
 }
-function le(e, n, t, o) {
+function le(e, t, n, o) {
   const a = O(
-    typeof window < "u" ? new URLSearchParams(window.location.search).get(n) ?? "" : ""
+    typeof window < "u" ? new URLSearchParams(window.location.search).get(t) ?? "" : ""
   );
   let s = null;
   function r(i) {
     a.value = i, s && clearTimeout(s), s = setTimeout(() => {
       I(
-        { [n]: i || null },
-        t
+        { [t]: i || null },
+        n
       );
     }, e);
   }
@@ -23,7 +23,7 @@ function le(e, n, t, o) {
     s && clearTimeout(s);
   }), o && z(o, (i, c, l) => {
     if (!i || typeof window > "u") return;
-    const f = new URLSearchParams(window.location.search).get(n) ?? "";
+    const f = new URLSearchParams(window.location.search).get(t) ?? "";
     i.value !== f && (i.value = f);
     const b = () => {
       r(i.value);
@@ -36,11 +36,11 @@ function le(e, n, t, o) {
 function q(e) {
   return e ? e.startsWith("-") ? { sortBy: e.slice(1), sortDir: "desc" } : { sortBy: e, sortDir: "asc" } : { sortBy: null, sortDir: "asc" };
 }
-function se(e, n) {
-  const t = typeof window < "u" ? window.location.search : "", o = new URLSearchParams(t), { sortBy: a, sortDir: s } = q(o.get(e));
+function se(e, t) {
+  const n = typeof window < "u" ? window.location.search : "", o = new URLSearchParams(n), { sortBy: a, sortDir: s } = q(o.get(e));
   function r(c) {
     const l = new URLSearchParams(window.location.search), { sortBy: u, sortDir: f } = q(l.get(e));
-    I(u === c ? f === "asc" ? { [e]: `-${c}` } : { [e]: null } : { [e]: c }, n);
+    I(u === c ? f === "asc" ? { [e]: `-${c}` } : { [e]: null } : { [e]: c }, t);
   }
   function i(c) {
     return {
@@ -51,25 +51,25 @@ function se(e, n) {
   return { sortBy: a, sortDir: s, onSort: r, getSortState: i };
 }
 function ie(e) {
-  function n(t) {
-    I({ [e]: String(t) }, e);
+  function t(n) {
+    I({ [e]: String(n) }, e);
   }
-  return { onPageChange: n };
+  return { onPageChange: t };
 }
 const V = /* @__PURE__ */ new Map();
-function Qe(e, n) {
-  V.has(e) || V.set(e, []), V.get(e).push(n);
+function Qe(e, t) {
+  V.has(e) || V.set(e, []), V.get(e).push(t);
 }
 function Xe(e) {
   e ? V.delete(e) : V.clear();
 }
 function ce(e) {
-  let n = "";
-  const t = [];
+  let t = "";
+  const n = [];
   function o() {
     const a = JSON.stringify(e.tableSettings);
-    if (n === a) return;
-    n = a, t.forEach((r) => r()), t.length = 0;
+    if (t === a) return;
+    t = a, n.forEach((r) => r()), n.length = 0;
     const s = () => {
       L.reload();
     };
@@ -77,7 +77,7 @@ function ce(e) {
       const c = V.get(r) ?? [];
       for (const l of c) {
         const f = l({ value: i, tableData: e, refresh: s });
-        typeof f == "function" && t.push(f);
+        typeof f == "function" && n.push(f);
       }
     }
   }
@@ -86,11 +86,11 @@ function ce(e) {
     () => o(),
     { immediate: !0, deep: !0 }
   ), j(() => {
-    t.forEach((a) => a()), t.length = 0;
+    n.forEach((a) => a()), n.length = 0;
   });
 }
-function ue(e, n, t) {
-  return "key" in n && n.key ? e[n.key] : e[t];
+function ue(e, t, n) {
+  return "key" in t && t.key ? e[t.key] : e[n];
 }
 const de = {
   key: 0,
@@ -102,18 +102,18 @@ const de = {
     nullText: {}
   },
   setup(e) {
-    return (n, t) => e.value == null ? (g(), m("span", de, w(e.nullText ?? "-"), 1)) : (g(), m("span", ge, w(String(e.value)), 1));
+    return (t, n) => e.value == null ? (g(), m("span", de, w(e.nullText ?? "-"), 1)) : (g(), m("span", ge, w(String(e.value)), 1));
   }
-}), W = /* @__PURE__ */ new Map();
-function Ye(e, n) {
-  W.set(e, n);
+}), J = /* @__PURE__ */ new Map();
+function Ye(e, t) {
+  J.set(e, t);
 }
 function et(e) {
-  for (const [n, t] of Object.entries(e))
-    W.set(n, t);
+  for (const [t, n] of Object.entries(e))
+    J.set(t, n);
 }
 function ee(e) {
-  return W.get(e);
+  return J.get(e);
 }
 const me = {
   key: 0,
@@ -131,7 +131,7 @@ const me = {
     iconResolver: { type: Function }
   },
   setup(e) {
-    const n = {
+    const t = {
       default: "bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200",
       success: "bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200",
       warning: "bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200",
@@ -140,11 +140,11 @@ const me = {
       info: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200",
       gray: "bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300",
       outline: "bg-transparent text-gray-700 border border-gray-300 dark:text-gray-300 dark:border-gray-600"
-    }, t = e, o = y(() => t.colorField && t.row[t.colorField] ? String(t.row[t.colorField]) : t.variant ?? "default"), a = y(() => n[o.value] ?? n.default), s = y(() => t.tooltipKey ? t.row[t.tooltipKey] : void 0), r = y(() => {
+    }, n = e, o = y(() => n.colorField && n.row[n.colorField] ? String(n.row[n.colorField]) : n.variant ?? "default"), a = y(() => t[o.value] ?? t.default), s = y(() => n.tooltipKey ? n.row[n.tooltipKey] : void 0), r = y(() => {
       var c;
-      if (!t.iconKey) return null;
-      const i = t.row[t.iconKey];
-      return i ? ((c = t.iconResolver) == null ? void 0 : c.call(t, i)) ?? ee(i) ?? null : null;
+      if (!n.iconKey) return null;
+      const i = n.row[n.iconKey];
+      return i ? ((c = n.iconResolver) == null ? void 0 : c.call(n, i)) ?? ee(i) ?? null : null;
     });
     return (i, c) => e.value == null ? (g(), m("span", me, w(e.nullText ?? "-"), 1)) : (g(), m("span", {
       key: 1,
@@ -155,7 +155,7 @@ const me = {
         key: 0,
         class: "h-3 w-3"
       })) : $("", !0),
-      J(" " + w(String(e.value)), 1)
+      _(" " + w(String(e.value)), 1)
     ], 10, fe));
   }
 }), ye = {
@@ -170,37 +170,37 @@ const me = {
     includeTime: { type: Boolean }
   },
   setup(e) {
-    const n = e, t = y(() => {
-      if (n.formattedValue == null) return null;
-      if (n.local && n.rawValue)
+    const t = e, n = y(() => {
+      if (t.formattedValue == null) return null;
+      if (t.local && t.rawValue)
         try {
-          const o = new Date(n.rawValue), a = n.includeTime ? { dateStyle: "medium", timeStyle: "short" } : { dateStyle: "medium" };
+          const o = new Date(t.rawValue), a = t.includeTime ? { dateStyle: "medium", timeStyle: "short" } : { dateStyle: "medium" };
           return new Intl.DateTimeFormat(void 0, a).format(o);
         } catch {
-          return n.formattedValue;
+          return t.formattedValue;
         }
-      return n.formattedValue;
+      return t.formattedValue;
     });
     return (o, a) => e.formattedValue == null ? (g(), m("span", ye, "-")) : (g(), m("time", {
       key: 1,
       datetime: e.rawValue ?? void 0,
       class: "text-sm text-gray-600 dark:text-gray-400"
-    }, w(t.value), 9, ve));
+    }, w(n.value), 9, ve));
   }
 });
-function ke(e, n) {
-  const t = {};
-  for (const [o, a] of Object.entries(n))
+function ke(e, t) {
+  const n = {};
+  for (const [o, a] of Object.entries(t))
     if (a.startsWith(":")) {
       const s = a.slice(1);
-      t[o] = e[s];
+      n[o] = e[s];
     } else
-      t[o] = a;
-  return t;
+      n[o] = a;
+  return n;
 }
-function xe(e, n) {
-  const t = window.route;
-  return typeof t == "function" ? t(e, n) : (console.warn(
+function xe(e, t) {
+  const n = window.route;
+  return typeof n == "function" ? n(e, t) : (console.warn(
     `[inertia-table-vue] Ziggy route() not found. Set 'use_ziggy' => false in config to resolve routes server-side, or install ziggy-js. Route: ${e}`
   ), "#");
 }
@@ -222,22 +222,22 @@ const pe = {
     nullText: {}
   },
   setup(e) {
-    const n = e, t = y(() => {
-      if (n.resolvedHref) return n.resolvedHref;
-      if (n.route && n.params) {
-        const o = ke(n.row, n.params);
-        return xe(n.route, o);
+    const t = e, n = y(() => {
+      if (t.resolvedHref) return t.resolvedHref;
+      if (t.route && t.params) {
+        const o = ke(t.row, t.params);
+        return xe(t.route, o);
       }
       return null;
     });
-    return (o, a) => e.value == null ? (g(), m("span", pe, w(e.nullText ?? "-"), 1)) : t.value ? (g(), A(d(oe), {
+    return (o, a) => e.value == null ? (g(), m("span", pe, w(e.nullText ?? "-"), 1)) : n.value ? (g(), A(d(oe), {
       key: 2,
-      href: t.value,
+      href: n.value,
       prefetch: e.prefetch !== !1 ? "hover" : void 0,
       class: "text-blue-600 hover:text-blue-800 hover:underline dark:text-blue-400 dark:hover:text-blue-300"
     }, {
       default: ne(() => [
-        J(w(String(e.value)), 1)
+        _(w(String(e.value)), 1)
       ]),
       _: 1
     }, 8, ["href", "prefetch"])) : (g(), m("span", Se, w(String(e.value)), 1));
@@ -268,11 +268,11 @@ const pe = {
     nullText: {}
   },
   setup(e) {
-    const n = e, t = O(!1);
+    const t = e, n = O(!1);
     let o = null;
     function a() {
-      n.value != null && navigator.clipboard.writeText(String(n.value)).then(() => {
-        t.value = !0, o && clearTimeout(o), o = setTimeout(() => t.value = !1, 2e3);
+      t.value != null && navigator.clipboard.writeText(String(t.value)).then(() => {
+        n.value = !0, o && clearTimeout(o), o = setTimeout(() => n.value = !1, 2e3);
       }).catch(() => {
       });
     }
@@ -284,14 +284,14 @@ const pe = {
       onClick: a,
       class: h([
         "inline-flex items-center gap-1.5 rounded-md px-2 py-1 text-xs font-medium transition-colors",
-        t.value ? "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300" : "bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
+        n.value ? "bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300" : "bg-gray-100 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
       ]),
-      "aria-label": t.value ? "Copied!" : `Copy ${String(e.value)} to clipboard`,
-      title: t.value ? "Copied!" : "Click to copy"
+      "aria-label": n.value ? "Copied!" : `Copy ${String(e.value)} to clipboard`,
+      title: n.value ? "Copied!" : "Click to copy"
     }, [
-      J(w(String(e.value)) + " ", 1),
+      _(w(String(e.value)) + " ", 1),
       (g(), m("svg", Te, [
-        t.value ? (g(), m("path", Ne)) : (g(), m("path", Pe))
+        n.value ? (g(), m("path", Ne)) : (g(), m("path", Pe))
       ]))
     ], 10, $e));
   }
@@ -302,18 +302,18 @@ const pe = {
     iconResolver: { type: Function }
   },
   setup(e) {
-    const n = e, t = y(() => {
+    const t = e, n = y(() => {
       var o;
-      return ((o = n.iconResolver) == null ? void 0 : o.call(n, n.iconName)) ?? ee(n.iconName);
+      return ((o = t.iconResolver) == null ? void 0 : o.call(t, t.iconName)) ?? ee(t.iconName);
     });
-    return (o, a) => t.value ? (g(), A(G(t.value), {
+    return (o, a) => n.value ? (g(), A(G(n.value), {
       key: 0,
       class: "h-4 w-4 text-gray-500 dark:text-gray-400"
     })) : $("", !0);
   }
 }), te = /* @__PURE__ */ new Map();
-function tt(e, n) {
-  te.set(e, n);
+function tt(e, t) {
+  te.set(e, t);
 }
 function Fe(e) {
   return te.get(e);
@@ -326,8 +326,8 @@ const Q = /* @__PURE__ */ C({
     columnName: {}
   },
   setup(e) {
-    const n = e, t = y(() => Fe(n.componentName));
-    return (o, a) => t.value ? (g(), A(G(t.value), {
+    const t = e, n = y(() => Fe(t.componentName));
+    return (o, a) => n.value ? (g(), A(G(n.value), {
       key: 0,
       row: e.row,
       value: e.row[e.columnName],
@@ -336,10 +336,10 @@ const Q = /* @__PURE__ */ C({
   }
 });
 function Ve(e) {
-  const { tableData: n, slots: t, onSort: o, getSortState: a, nullText: s, classNames: r, iconResolver: i } = e;
+  const { tableData: t, slots: n, onSort: o, getSortState: a, nullText: s, classNames: r, iconResolver: i } = e;
   return y(() => {
     const c = [];
-    for (const l of n.columns)
+    for (const l of t.columns)
       l.hidden || c.push({
         id: l.name,
         fit: l.fit ?? !1,
@@ -355,9 +355,9 @@ function Ve(e) {
             sortState: u,
             onSort: o,
             index: c.length
-          }, b = t[`header-${l.name}`];
+          }, b = n[`header-${l.name}`];
           if (b) return b(f);
-          if (t.header) return t.header(f);
+          if (n.header) return n.header(f);
           let k = null;
           return l.sortable && (u.active ? k = p(
             "svg",
@@ -383,23 +383,23 @@ function Ve(e) {
         renderCell: (u, f) => {
           var N;
           if (l.displays.length === 1 && l.displays[0].type === "actions")
-            return ((N = t.actions) == null ? void 0 : N.call(t, { row: u })) ?? null;
+            return ((N = n.actions) == null ? void 0 : N.call(n, { row: u })) ?? null;
           const b = u[l.name], k = {
             row: u,
             value: b,
             column: l,
             displays: l.displays,
             rowIndex: f
-          }, T = t[`cell-${l.name}`];
+          }, T = n[`cell-${l.name}`];
           if (T) return T(k);
-          if (t.cell) {
+          if (n.cell) {
             const B = () => X(l.displays, u, l.name, s, i);
-            return t.cell({ ...k, defaultRender: B });
+            return n.cell({ ...k, defaultRender: B });
           }
           return X(l.displays, u, l.name, s, i);
         }
       });
-    return t.actions && (n.columns.some(
+    return n.actions && (t.columns.some(
       (u) => u.displays.length === 1 && u.displays[0].type === "actions"
     ) || c.push({
       id: "_actions",
@@ -408,19 +408,19 @@ function Ve(e) {
       getAriaSort: () => {
       },
       renderHeader: () => null,
-      renderCell: (u) => t.actions({ row: u })
+      renderCell: (u) => n.actions({ row: u })
     })), c;
   });
 }
-function X(e, n, t, o, a) {
+function X(e, t, n, o, a) {
   if (!e || e.length === 0)
-    return p(Z, { value: n[t], nullText: o });
+    return p(Z, { value: t[n], nullText: o });
   if (e.length === 1 && e[0].type === "component") {
     const r = e[0];
-    return p(Q, { componentName: r.component, row: n, columnName: t });
+    return p(Q, { componentName: r.component, row: t, columnName: n });
   }
   const s = e.map((r, i) => {
-    const c = ue(n, r, t);
+    const c = ue(t, r, n);
     switch (r.type) {
       case "text":
         return p(Z, { key: i, value: c, nullText: o });
@@ -428,31 +428,31 @@ function X(e, n, t, o, a) {
         return p(he, {
           key: i,
           value: c,
-          variant: r.variant,
+          variant: r.variant_key ? String(t[r.variant_key] ?? "") : r.variant,
           colorField: r.color_field,
           tooltipKey: r.tooltip_key,
           iconKey: r.icon_key,
-          row: n,
+          row: t,
           nullText: o,
           iconResolver: a
         });
       case "date":
         return p(be, {
           key: i,
-          formattedValue: r.formatted_key ? String(n[r.formatted_key] ?? "") : String(c ?? ""),
-          rawValue: r.raw_key ? String(n[r.raw_key] ?? "") : null,
+          formattedValue: r.formatted_key ? String(t[r.formatted_key] ?? "") : String(c ?? ""),
+          rawValue: r.raw_key ? String(t[r.raw_key] ?? "") : null,
           local: r.local ?? !1,
           includeTime: r.includeTime ?? !1
         });
       case "link": {
-        const l = r.href_key ? n[r.href_key] : void 0;
+        const l = r.href_key ? t[r.href_key] : void 0;
         return p(we, {
           key: i,
           value: c,
           route: r.route,
           params: r.params,
           resolvedHref: l != null ? String(l) : void 0,
-          row: n,
+          row: t,
           prefetch: r.prefetch,
           nullText: o
         });
@@ -465,8 +465,8 @@ function X(e, n, t, o, a) {
         return p(Q, {
           key: i,
           componentName: r.component,
-          row: n,
-          columnName: t
+          row: t,
+          columnName: n
         });
       default:
         return null;
@@ -492,24 +492,24 @@ const De = {
   paginationInfo: "text-sm text-gray-500 dark:text-gray-400",
   empty: "p-8 text-center text-gray-500 dark:text-gray-400"
 };
-function K(e, n, t) {
-  return e ? `${e}${n}` : t;
+function K(e, t, n) {
+  return e ? `${e}${t}` : n;
 }
-function Ie(e, n) {
-  const { tableData: t } = e, o = e.nullText ?? "-", a = y(() => ({
+function Ie(e, t) {
+  const { tableData: n } = e, o = e.nullText ?? "-", a = y(() => ({
     ...De,
     ...e.classNames
-  })), s = t.identifier ?? null, r = K(s, "Search", "search"), i = K(s, "Sort", "sort"), c = K(s, "Page", "page"), { onPageChange: l } = ie(c), { searchTerm: u, onSearch: f, hasExternalSearch: b } = le(t.searchDebounce, r, c, e.searchRef), { sortBy: k, sortDir: T, onSort: N, getSortState: B } = se(i, c), E = Ve({
-    tableData: t,
-    slots: n,
+  })), s = n.identifier ?? null, r = K(s, "Search", "search"), i = K(s, "Sort", "sort"), c = K(s, "Page", "page"), { onPageChange: l } = ie(c), { searchTerm: u, onSearch: f, hasExternalSearch: b } = le(n.searchDebounce, r, c, e.searchRef), { sortBy: k, sortDir: T, onSort: N, getSortState: B } = se(i, c), E = Ve({
+    tableData: n,
+    slots: t,
     onSort: N,
     getSortState: B,
     nullText: o,
     classNames: a,
     iconResolver: e.iconResolver
   });
-  ce(t);
-  const v = Le(t, r, i, c);
+  ce(n);
+  const v = Le(n, r, i, c);
   return {
     columns: E,
     classNames: a,
@@ -524,13 +524,13 @@ function Ie(e, n) {
     isProcessing: v
   };
 }
-function Le(e, n, t, o) {
+function Le(e, t, n, o) {
   const a = O(!1);
   let s = e.data;
   z(() => e.data, (l) => {
     s !== l && (s = l, a.value = !1);
   });
-  const r = [n, t, o], i = L.on("start", (l) => {
+  const r = [t, n, o], i = L.on("start", (l) => {
     try {
       const u = new URL(l.detail.visit.url), f = new URL(window.location.href);
       r.some((k) => u.searchParams.get(k) !== f.searchParams.get(k)) && (a.value = !0);
@@ -553,8 +553,8 @@ const je = { class: "relative" }, Ae = ["value", "placeholder"], Ee = /* @__PURE
     className: {}
   },
   setup(e) {
-    return (n, t) => (g(), m("div", je, [
-      t[1] || (t[1] = x("svg", {
+    return (t, n) => (g(), m("div", je, [
+      n[1] || (n[1] = x("svg", {
         class: "absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400 dark:text-gray-500",
         fill: "none",
         viewBox: "0 0 24 24",
@@ -570,7 +570,7 @@ const je = { class: "relative" }, Ae = ["value", "placeholder"], Ee = /* @__PURE
       x("input", {
         type: "text",
         value: e.searchTerm,
-        onInput: t[0] || (t[0] = (o) => e.onSearch(o.target.value)),
+        onInput: n[0] || (n[0] = (o) => e.onSearch(o.target.value)),
         placeholder: e.placeholder ?? "Search...",
         class: h(`pl-9 ${e.className ?? ""}`),
         "aria-label": "Search table"
@@ -587,9 +587,9 @@ const je = { class: "relative" }, Ae = ["value", "placeholder"], Ee = /* @__PURE
     classNames: {}
   },
   setup(e) {
-    const n = e, t = y(() => n.links.prev !== null), o = y(() => n.links.next !== null), a = y(() => {
-      const { from: s, to: r } = n.meta;
-      return s !== null && r !== null ? n.meta.total !== void 0 ? `Showing ${s} to ${r} of ${n.meta.total} results` : `Showing ${s} to ${r} results` : "No results";
+    const t = e, n = y(() => t.links.prev !== null), o = y(() => t.links.next !== null), a = y(() => {
+      const { from: s, to: r } = t.meta;
+      return s !== null && r !== null ? t.meta.total !== void 0 ? `Showing ${s} to ${r} of ${t.meta.total} results` : `Showing ${s} to ${r} results` : "No results";
     });
     return (s, r) => (g(), m("nav", {
       class: h(e.classNames.pagination),
@@ -603,14 +603,14 @@ const je = { class: "relative" }, Ae = ["value", "placeholder"], Ee = /* @__PURE
           key: 0,
           type: "button",
           onClick: r[0] || (r[0] = (i) => e.onPageChange(1)),
-          disabled: !t.value || e.isFetching,
+          disabled: !n.value || e.isFetching,
           class: h(e.classNames.paginationButton),
           "aria-label": "Go to first page"
         }, " First ", 10, Ue)) : $("", !0),
         x("button", {
           type: "button",
           onClick: r[1] || (r[1] = (i) => e.onPageChange(e.meta.current_page - 1)),
-          disabled: !t.value || e.isFetching,
+          disabled: !n.value || e.isFetching,
           class: h(e.classNames.paginationButton),
           "aria-label": "Go to previous page"
         }, " Previous ", 10, Me),
@@ -632,7 +632,7 @@ const je = { class: "relative" }, Ae = ["value", "placeholder"], Ee = /* @__PURE
       ])
     ], 2));
   }
-}), Ge = ["colspan"], Je = /* @__PURE__ */ C({
+}), Ge = ["colspan"], _e = /* @__PURE__ */ C({
   __name: "TableEmpty",
   props: {
     colSpan: {},
@@ -640,7 +640,7 @@ const je = { class: "relative" }, Ae = ["value", "placeholder"], Ee = /* @__PURE
     className: {}
   },
   setup(e) {
-    return (n, t) => (g(), m("tr", null, [
+    return (t, n) => (g(), m("tr", null, [
       x("td", {
         colspan: e.colSpan,
         class: h(e.className)
@@ -658,7 +658,7 @@ const je = { class: "relative" }, Ae = ["value", "placeholder"], Ee = /* @__PURE
   setup(e) {
     return () => e.render();
   }
-}), We = ["aria-busy"], _e = ["aria-sort"], nt = /* @__PURE__ */ C({
+}), Je = ["aria-busy"], We = ["aria-sort"], nt = /* @__PURE__ */ C({
   __name: "InertiaTable",
   props: {
     tableData: {},
@@ -674,7 +674,7 @@ const je = { class: "relative" }, Ae = ["value", "placeholder"], Ee = /* @__PURE
     iconResolver: {}
   },
   setup(e) {
-    const n = e, t = ae(), {
+    const t = e, n = ae(), {
       columns: o,
       classNames: a,
       searchTerm: s,
@@ -682,22 +682,22 @@ const je = { class: "relative" }, Ae = ["value", "placeholder"], Ee = /* @__PURE
       hasExternalSearch: i,
       onPageChange: c,
       isProcessing: l
-    } = Ie(n, t), u = y(() => n.tableData.data.length > 0), f = o, b = y(() => n.isFetching || l.value), k = y(() => n.tableData.searchable && !i), T = y(() => new Set(f.value.filter((v) => v.fit).map((v) => v.id))), N = y(
+    } = Ie(t, n), u = y(() => t.tableData.data.length > 0), f = o, b = y(() => t.isFetching || l.value), k = y(() => t.tableData.searchable && !i), T = y(() => new Set(f.value.filter((v) => v.fit).map((v) => v.id))), N = y(
       () => [
-        n.modal ? "" : a.value.wrapper,
-        n.className ?? ""
+        t.modal ? "" : a.value.wrapper,
+        t.className ?? ""
       ].filter(Boolean).join(" ")
     );
     function B(v, R) {
-      !n.onRowClick || R.target.closest('a, button, input, select, textarea, [role="button"]') || n.onRowClick(v);
+      !t.onRowClick || R.target.closest('a, button, input, select, textarea, [role="button"]') || t.onRowClick(v);
     }
     function E(v, R) {
-      n.onRowClick && (R.key === "Enter" || R.key === " ") && (R.preventDefault(), n.onRowClick(v));
+      t.onRowClick && (R.key === "Enter" || R.key === " ") && (R.preventDefault(), t.onRowClick(v));
     }
     return (v, R) => (g(), m("div", {
       class: h(N.value)
     }, [
-      k.value || d(t)["toolbar-actions"] ? F(v.$slots, "toolbar", {
+      k.value || d(n)["toolbar-actions"] ? F(v.$slots, "toolbar", {
         key: 0,
         searchable: k.value,
         searchTerm: d(s),
@@ -740,7 +740,7 @@ const je = { class: "relative" }, Ae = ["value", "placeholder"], Ee = /* @__PURE
                 D(d(Y), {
                   render: S.renderHeader
                 }, null, 8, ["render"])
-              ], 10, _e))), 128))
+              ], 10, We))), 128))
             ])
           ], 2),
           x("tbody", {
@@ -751,13 +751,13 @@ const je = { class: "relative" }, Ae = ["value", "placeholder"], Ee = /* @__PURE
               row: S,
               rowIndex: H
             }, () => {
-              var _;
+              var W;
               return [
                 x("tr", re({
                   class: [
                     d(a).tr,
                     e.onRowClick ? d(a).trClickable : "",
-                    ((_ = e.rowClassName) == null ? void 0 : _.call(e, S, H)) ?? ""
+                    ((W = e.rowClassName) == null ? void 0 : W.call(e, S, H)) ?? ""
                   ].filter(Boolean).join(" ")
                 }, { ref_for: !0 }, e.onRowClick ? {
                   role: "button",
@@ -776,7 +776,7 @@ const je = { class: "relative" }, Ae = ["value", "placeholder"], Ee = /* @__PURE
                 ], 16)
               ];
             })), 128)) : F(v.$slots, "empty", { key: 1 }, () => [
-              D(Je, {
+              D(_e, {
                 colSpan: d(f).length,
                 emptyText: e.emptyText,
                 className: d(a).empty
@@ -784,7 +784,7 @@ const je = { class: "relative" }, Ae = ["value", "placeholder"], Ee = /* @__PURE
             ])
           ], 2)
         ], 2)
-      ], 10, We),
+      ], 10, Je),
       u.value ? F(v.$slots, "pagination", {
         key: 1,
         links: e.tableData.links,

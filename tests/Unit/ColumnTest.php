@@ -98,6 +98,24 @@ it('adds badge display with all options', function () {
         ->tooltip_key->toBe('tooltip_field');
 });
 
+it('adds badge display with closure variant', function () {
+    $col = Column::make('status', 'Status')->badge(
+        variant: fn ($m) => $m->status === 'active' ? 'success' : 'danger',
+    );
+    $arr = $col->toArray();
+
+    expect($arr['displays'][0])->toHaveKey('variant_key')
+        ->and($arr['displays'][0])->not->toHaveKey('variant');
+
+    $model = (object) ['status' => 'active'];
+    $values = $col->resolveDisplayValues($model);
+    expect($values[$arr['displays'][0]['variant_key']])->toBe('success');
+
+    $model2 = (object) ['status' => 'inactive'];
+    $values2 = $col->resolveDisplayValues($model2);
+    expect($values2[$arr['displays'][0]['variant_key']])->toBe('danger');
+});
+
 it('adds badge display with closure tooltip', function () {
     $col = Column::make('status', 'Status')->badge(
         tooltip: fn ($m) => "Details: {$m->status}",

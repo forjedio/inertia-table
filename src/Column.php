@@ -148,7 +148,7 @@ class Column
     public function badge(
         string|Closure|null $value = null,
         ?string $colorField = null,
-        ?string $variant = null,
+        string|Closure|null $variant = null,
         string|Closure|null $tooltip = null,
     ): static {
         $display = ['type' => 'badge'];
@@ -157,10 +157,12 @@ class Column
         if ($colorField) {
             $display['color_field'] = $colorField;
         }
-        if ($variant) {
+
+        if ($variant instanceof Closure) {
+            $this->resolveDisplayValue($display, $variant, 'variant_key');
+        } elseif (is_string($variant)) {
             $display['variant'] = $variant;
         }
-
         $this->resolveDisplayValue($display, $tooltip, 'tooltip_key');
 
         $this->displays[] = $display;

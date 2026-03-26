@@ -50,6 +50,7 @@ export declare type CellDisplay = {
     key?: string;
     color_field?: string;
     variant?: string;
+    variant_key?: string;
     tooltip_key?: string;
     icon_key?: string;
 } | {
