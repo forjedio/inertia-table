@@ -62,6 +62,7 @@
         "ziggy-js": "^2.0"
     },
     "scripts": {
+        "prepare": "vite build",
         "build": "vite build",
         "dev": "vite build --watch",
         "test": "vitest run",

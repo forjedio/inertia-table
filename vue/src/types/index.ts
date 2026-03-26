@@ -109,6 +109,7 @@ export interface ClassNames {
     paginationButton: string;
     paginationInfo: string;
     empty: string;
+    link: string;
 }
 
 export interface BuiltColumn {

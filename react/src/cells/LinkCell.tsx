@@ -11,9 +11,10 @@ interface LinkCellProps {
     row: Row;
     prefetch?: boolean;
     nullText?: string;
+    linkClassName?: string;
 }
 
-export function LinkCell({ value, route: routeName, params, resolvedHref, row, prefetch = true, nullText = '-' }: LinkCellProps) {
+export function LinkCell({ value, route: routeName, params, resolvedHref, row, prefetch = true, nullText = '-', linkClassName }: LinkCellProps) {
     if (value === null || value === undefined) {
         return <span className="text-gray-400 dark:text-gray-500">{nullText}</span>;
     }
@@ -29,7 +30,7 @@ export function LinkCell({ value, route: routeName, params, resolvedHref, row, p
         <Link
             href={href}
             prefetch={prefetch ? 'hover' : undefined}
-            className="text-blue-600 hover:text-blue-800 hover:underline dark:text-blue-400 dark:hover:text-blue-300"
+            className={linkClassName}
         >
             {String(value)}
         </Link>

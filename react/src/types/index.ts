@@ -130,6 +130,7 @@ export interface ClassNames {
     paginationButton: string;
     paginationInfo: string;
     empty: string;
+    link: string;
 }
 
 // ─── Built Column (internal table rendering) ───────

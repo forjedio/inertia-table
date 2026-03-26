@@ -69,6 +69,26 @@ it('BadgeColumn supports chaining colorField and variant', function () {
         ->and($col->isSortable())->toBeTrue();
 });
 
+it('BadgeColumn closure variant clears static variant', function () {
+    $col = BadgeColumn::make('status', 'Status')
+        ->variant('outline')
+        ->variant(fn ($m) => $m->level);
+
+    $arr = $col->toArray();
+    expect($arr['displays'][0])->toHaveKey('variant_key')
+        ->and($arr['displays'][0])->not->toHaveKey('variant');
+});
+
+it('BadgeColumn string variant clears closure variant', function () {
+    $col = BadgeColumn::make('status', 'Status')
+        ->variant(fn ($m) => $m->level)
+        ->variant('success');
+
+    $arr = $col->toArray();
+    expect($arr['displays'][0]['variant'])->toBe('success')
+        ->and($arr['displays'][0])->not->toHaveKey('variant_key');
+});
+
 it('DateColumn auto-adds date display', function () {
     $col = DateColumn::make('created_at', 'Created');
     $arr = $col->toArray();

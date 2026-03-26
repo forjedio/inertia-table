@@ -9,6 +9,8 @@ coverage.xml
 *.swp
 *.tsbuildinfo
 vue/node_modules/
+vue/dist/
 vue/coverage/
 react/node_modules/
+react/dist/
 react/coverage/

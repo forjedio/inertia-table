@@ -104,11 +104,11 @@ export function useColumnBuilder(options: UseColumnBuilderOptions) {
                     if (cellSlot) return cellSlot(cellProps) as any;
 
                     if (slots.cell) {
-                        const defaultRender = () => renderDisplays(col.displays, row, col.name, nullText, iconResolver);
+                        const defaultRender = () => renderDisplays(col.displays, row, col.name, nullText, iconResolver, classNames.value.link);
                         return slots.cell({ ...cellProps, defaultRender }) as any;
                     }
 
-                    return renderDisplays(col.displays, row, col.name, nullText, iconResolver);
+                    return renderDisplays(col.displays, row, col.name, nullText, iconResolver, classNames.value.link);
                 },
             });
         }
@@ -140,6 +140,7 @@ function renderDisplays(
     columnName: string,
     nullText: string,
     iconResolver?: IconResolver,
+    linkClassName?: string,
 ) {
     if (!displays || displays.length === 0) {
         return h(TextCell, { value: row[columnName], nullText });
@@ -176,7 +177,7 @@ function renderDisplays(
                     key: i, value,
                     route: display.route, params: display.params,
                     resolvedHref: hrefValue != null ? String(hrefValue) : undefined,
-                    row, prefetch: display.prefetch, nullText,
+                    row, prefetch: display.prefetch, nullText, linkClassName,
                 });
             }
             case 'copyable':

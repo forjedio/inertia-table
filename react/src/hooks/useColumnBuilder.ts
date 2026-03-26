@@ -148,7 +148,7 @@ export function useColumnBuilder(options: UseColumnBuilderOptions): BuiltColumn[
                         return cellRenderers[col.name](cellProps);
                     }
 
-                    const defaultRender = () => renderDisplays(col.displays, row, col.name, nullText, iconResolver);
+                    const defaultRender = () => renderDisplays(col.displays, row, col.name, nullText, iconResolver, classNames.link);
 
                     if (renderCell) {
                         return renderCell({ ...cellProps, defaultRender });
@@ -188,6 +188,7 @@ function renderDisplays(
     columnName: string,
     nullText: string,
     iconResolver?: IconResolver,
+    linkClassName?: string,
 ): React.ReactNode {
     if (!displays || displays.length === 0) {
         return React.createElement(TextCell, { value: row[columnName], nullText });
@@ -223,7 +224,7 @@ function renderDisplays(
                 return React.createElement(LinkCell, {
                     key: i, value, route: display.route, params: display.params,
                     resolvedHref: hrefValue != null ? String(hrefValue) : undefined,
-                    row, prefetch: display.prefetch, nullText,
+                    row, prefetch: display.prefetch, nullText, linkClassName,
                 });
             }
             case 'copyable':
