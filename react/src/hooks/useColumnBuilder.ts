@@ -207,7 +207,7 @@ function renderDisplays(
                 return React.createElement(TextCell, { key: i, value, nullText });
             case 'badge':
                 return React.createElement(BadgeCell, {
-                    key: i, value, variant: display.variant,
+                    key: i, value, variant: display.variant_key ? String(row[display.variant_key] ?? '') : display.variant,
                     colorField: display.color_field, tooltipKey: display.tooltip_key,
                     iconKey: display.icon_key, row, nullText, iconResolver,
                 });

@@ -55,6 +55,18 @@ it('BadgeColumn supports variant fluent setter', function () {
     expect($arr['displays'][0]['variant'])->toBe('outline');
 });
 
+it('BadgeColumn supports closure variant', function () {
+    $col = BadgeColumn::make('status', 'Status')
+        ->variant(fn ($m) => $m->status === 'active' ? 'success' : 'danger');
+
+    $arr = $col->toArray();
+    expect($arr['displays'][0])->toHaveKey('variant_key');
+
+    $model = (object) ['status' => 'active'];
+    $values = $col->resolveDisplayValues($model);
+    expect($values[$arr['displays'][0]['variant_key']])->toBe('success');
+});
+
 it('BadgeColumn supports chaining colorField and variant', function () {
     $col = BadgeColumn::make('status', 'Status')
         ->colorField('color')
