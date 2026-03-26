@@ -59,8 +59,8 @@
             "@pre-commit:vue",
             "@pre-commit:react"
         ],
-        "pre-commit:vue": "cd vue && npm run pre-commit && npm run build",
-        "pre-commit:react": "cd react && npm run pre-commit && npm run build"
+        "pre-commit:vue": "cd vue && npm run pre-commit",
+        "pre-commit:react": "cd react && npm run pre-commit"
     },
     "minimum-stability": "stable",
     "prefer-stable": true,

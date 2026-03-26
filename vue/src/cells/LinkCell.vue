@@ -5,7 +5,7 @@
         v-else
         :href="href"
         :prefetch="prefetch !== false ? 'hover' : undefined"
-        class="text-blue-600 hover:text-blue-800 hover:underline dark:text-blue-400 dark:hover:text-blue-300"
+        :class="linkClassName"
     >
         {{ String(value) }}
     </Link>
@@ -25,6 +25,7 @@ const props = defineProps<{
     row: Row;
     prefetch?: boolean;
     nullText?: string;
+    linkClassName?: string;
 }>();
 
 const href = computed(() => {

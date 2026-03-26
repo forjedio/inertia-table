@@ -24,6 +24,7 @@ const DEFAULT_CLASS_NAMES: ClassNames = {
     paginationButton: 'px-3 py-1.5 text-sm border border-gray-300 rounded-md hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-700',
     paginationInfo: 'text-sm text-gray-500 dark:text-gray-400',
     empty: 'p-8 text-center text-gray-500 dark:text-gray-400',
+    link: 'text-blue-600 hover:text-blue-800 hover:underline dark:text-blue-400 dark:hover:text-blue-300',
 };
 
 function getParamName(identifier: string | null, suffix: string, fallback: string): string {
