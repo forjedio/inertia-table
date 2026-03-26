@@ -4,7 +4,9 @@
 </p>
 <p align="center">
   <a href="https://github.com/forjedio/inertia-table/actions/workflows/tests.yml"><img src="https://github.com/forjedio/inertia-table/actions/workflows/tests.yml/badge.svg?branch=main" alt="Tests"></a>
-  <a href="https://github.com/forjedio/inertia-table/actions/workflows/tests.yml"><img src="https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/RichardAnderson/e29bf5a426b54efb85898a4f5eb4bd49/raw/inertia-table-coverage.json" alt="Coverage"></a>
+  <a href="https://github.com/forjedio/inertia-table/actions/workflows/tests.yml"><img src="https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/RichardAnderson/e29bf5a426b54efb85898a4f5eb4bd49/raw/inertia-table-php-coverage.json" alt="PHP Coverage"></a>
+  <a href="https://github.com/forjedio/inertia-table/actions/workflows/tests.yml"><img src="https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/RichardAnderson/e29bf5a426b54efb85898a4f5eb4bd49/raw/inertia-table-vue-coverage.json" alt="Vue Coverage"></a>
+  <a href="https://github.com/forjedio/inertia-table/actions/workflows/tests.yml"><img src="https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/RichardAnderson/e29bf5a426b54efb85898a4f5eb4bd49/raw/inertia-table-react-coverage.json" alt="React Coverage"></a>
   <a href="https://inertia-table.forjed.io/"><img src="https://img.shields.io/badge/docs-inertia--table.forjed.io-blue" alt="Documentation"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green" alt="License"></a>
 </p>
@@ -52,7 +54,7 @@ return Inertia::render('Companies/Index', [
 Render it on the frontend:
 
 ```tsx
-import { InertiaTable } from '@forjedio/inertia-table-react';
+import { InertiaTable } from 'inertia-table-react';
 
 export default function Index({ companies }) {
     return <InertiaTable tableData={companies} />;
@@ -85,10 +87,10 @@ composer require forjedio/inertia-table
 
 ```bash
 # React
-npm install @forjedio/inertia-table-react
+npm install vendor/forjedio/inertia-table/react
 
 # Vue
-npm install @forjedio/inertia-table-vue
+npm install vendor/forjedio/inertia-table/vue
 ```
 
 ## Requirements
