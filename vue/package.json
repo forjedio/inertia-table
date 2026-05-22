@@ -32,7 +32,7 @@
     },
     "sideEffects": false,
     "peerDependencies": {
-        "@inertiajs/vue3": "^2.0",
+        "@inertiajs/vue3": "^2.0 || ^3.0",
         "vue": "^3.4",
         "tailwindcss": "^3.4 || ^4.0",
         "ziggy-js": "^2.0"
