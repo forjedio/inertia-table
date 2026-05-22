@@ -211,14 +211,17 @@ function renderDisplays(
                     colorField: display.color_field, tooltipKey: display.tooltip_key,
                     iconKey: display.icon_key, row, nullText, iconResolver,
                 });
-            case 'date':
+            case 'date': {
+                const formattedRaw = display.formatted_key ? row[display.formatted_key] : value;
+                const rawRaw = display.raw_key ? row[display.raw_key] : null;
                 return React.createElement(DateCell, {
                     key: i,
-                    formattedValue: display.formatted_key ? row[display.formatted_key] as string : value as string,
-                    rawValue: display.raw_key ? row[display.raw_key] as string : null,
+                    formattedValue: formattedRaw == null ? null : String(formattedRaw),
+                    rawValue: rawRaw == null ? null : String(rawRaw),
                     local: display.local ?? false,
                     includeTime: display.includeTime ?? false,
                 });
+            }
             case 'link': {
                 const hrefValue = display.href_key ? row[display.href_key] : undefined;
                 return React.createElement(LinkCell, {

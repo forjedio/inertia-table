@@ -1,14 +1,14 @@
 import React from 'react';
 
 interface DateCellProps {
-    formattedValue: string | null;
+    formattedValue: string | null | undefined;
     rawValue?: string | null;
     local?: boolean;
     includeTime?: boolean;
 }
 
 export function DateCell({ formattedValue, rawValue, local, includeTime }: DateCellProps) {
-    if (formattedValue === null || formattedValue === undefined) {
+    if (formattedValue == null || formattedValue === '') {
         return <span className="text-gray-400 dark:text-gray-500">-</span>;
     }
 

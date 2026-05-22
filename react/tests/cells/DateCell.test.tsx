@@ -21,6 +21,11 @@ describe('DateCell', () => {
         expect(screen.getByText('-')).toBeTruthy();
     });
 
+    it('renders dash for empty string formattedValue', () => {
+        render(<DateCell formattedValue="" />);
+        expect(screen.getByText('-')).toBeTruthy();
+    });
+
     it('sets dateTime attribute when rawValue is provided', () => {
         const { container } = render(
             <DateCell formattedValue="Jun 15, 2024" rawValue="2024-06-15T10:30:00Z" />,
