@@ -19,7 +19,6 @@ export default defineConfig({
             entry: resolve(__dirname, 'src/index.ts'),
             name: 'ForjedInertiaTableReact',
             formats: ['es', 'cjs'],
-            fileName: (format) => (format === 'cjs' ? 'index.cjs' : 'index.js'),
         },
         rollupOptions: {
             external: [
@@ -30,15 +29,36 @@ export default defineConfig({
                 '@tanstack/react-table',
                 'ziggy-js',
             ],
-            output: {
-                globals: {
-                    react: 'React',
-                    'react-dom': 'ReactDOM',
-                    'react/jsx-runtime': 'jsxRuntime',
-                    '@inertiajs/react': 'InertiaReact',
-                    'ziggy-js': 'route',
+            output: [
+                {
+                    format: 'es',
+                    dir: 'dist',
+                    preserveModules: true,
+                    preserveModulesRoot: 'src',
+                    entryFileNames: '[name].js',
+                    globals: {
+                        react: 'React',
+                        'react-dom': 'ReactDOM',
+                        'react/jsx-runtime': 'jsxRuntime',
+                        '@inertiajs/react': 'InertiaReact',
+                        'ziggy-js': 'route',
+                    },
                 },
-            },
+                {
+                    format: 'cjs',
+                    dir: 'dist',
+                    preserveModules: true,
+                    preserveModulesRoot: 'src',
+                    entryFileNames: '[name].cjs',
+                    globals: {
+                        react: 'React',
+                        'react-dom': 'ReactDOM',
+                        'react/jsx-runtime': 'jsxRuntime',
+                        '@inertiajs/react': 'InertiaReact',
+                        'ziggy-js': 'route',
+                    },
+                },
+            ],
         },
     },
     test: {
