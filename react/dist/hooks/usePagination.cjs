@@ -1,0 +1,1 @@
+"use strict";Object.defineProperty(exports,Symbol.toStringTag,{value:"Module"});const t=require("react"),i=require("../utils/navigate.cjs");function a(e){return{onPageChange:t.useCallback(n=>{i.navigateWithParams({[e]:String(n)},e)},[e])}}exports.usePagination=a;

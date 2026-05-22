@@ -1,0 +1,1 @@
+"use strict";Object.defineProperty(exports,Symbol.toStringTag,{value:"Module"});const l=require("react/jsx-runtime"),r=require("../registries/component-registry.cjs");function u({componentName:o,row:e,columnName:n}){const t=r.getCellComponent(o);return t?l.jsx(t,{row:e,value:e[n],column:n}):null}exports.ComponentCell=u;

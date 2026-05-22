@@ -1,0 +1,1 @@
+"use strict";Object.defineProperty(exports,Symbol.toStringTag,{value:"Module"});const t=new Map;function o(e,n){t.set(e,n)}function r(e){return t.get(e)}exports.getCellComponent=r;exports.registerCellComponent=o;

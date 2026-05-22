@@ -1,0 +1,1 @@
+"use strict";Object.defineProperty(exports,Symbol.toStringTag,{value:"Module"});const t=require("react/jsx-runtime");function n({value:e,nullText:r="-"}){return e==null?t.jsx("span",{className:"text-gray-400 dark:text-gray-500",children:r}):t.jsx("span",{children:String(e)})}exports.TextCell=n;
