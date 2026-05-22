@@ -1,5 +1,5 @@
 import { jsx as c, jsxs as T } from "react/jsx-runtime";
-import p, { useState as V, useRef as $, useCallback as H, useEffect as R, useMemo as J } from "react";
+import p, { useState as V, useRef as $, useCallback as R, useEffect as H, useMemo as J } from "react";
 import { useReactTable as te, createColumnHelper as re, getCoreRowModel as ne, flexRender as Z } from "@tanstack/react-table";
 import { router as W, Link as oe } from "@inertiajs/react";
 function P(e, t = "page") {
@@ -9,7 +9,7 @@ function P(e, t = "page") {
   t in e || r.searchParams.delete(t), W.get(r.toString(), {}, { preserveState: !0, preserveScroll: !0 });
 }
 function ae(e, t, r, o) {
-  const [n, i] = V(() => typeof window > "u" ? "" : new URLSearchParams(window.location.search).get(t) ?? ""), u = $(null), a = H(
+  const [n, i] = V(() => typeof window > "u" ? "" : new URLSearchParams(window.location.search).get(t) ?? ""), u = $(null), a = R(
     (l) => {
       i(l), u.current && clearTimeout(u.current), u.current = setTimeout(() => {
         P(
@@ -20,9 +20,9 @@ function ae(e, t, r, o) {
     },
     [e, t, r]
   );
-  return R(() => () => {
+  return H(() => () => {
     u.current && clearTimeout(u.current);
-  }, []), R(() => {
+  }, []), H(() => {
     if (!(o != null && o.current)) return;
     const l = o.current;
     if (typeof window > "u") return;
@@ -40,13 +40,13 @@ function q(e) {
   return e ? e.startsWith("-") ? { sortBy: e.slice(1), sortDir: "desc" } : { sortBy: e, sortDir: "asc" } : { sortBy: null, sortDir: "asc" };
 }
 function ie(e, t) {
-  const r = typeof window < "u" ? window.location.search : "", o = new URLSearchParams(r), { sortBy: n, sortDir: i } = q(o.get(e)), u = H(
+  const r = typeof window < "u" ? window.location.search : "", o = new URLSearchParams(r), { sortBy: n, sortDir: i } = q(o.get(e)), u = R(
     (l) => {
       const d = new URLSearchParams(window.location.search), { sortBy: f, sortDir: g } = q(d.get(e));
       P(f === l ? g === "asc" ? { [e]: `-${l}` } : { [e]: null } : { [e]: l }, t);
     },
     [e, t]
-  ), a = H(
+  ), a = R(
     (l) => ({
       active: n === l,
       direction: n === l ? i : null
@@ -56,7 +56,7 @@ function ie(e, t) {
   return { sortBy: n, sortDir: i, onSort: u, getSortState: a };
 }
 function se(e) {
-  return { onPageChange: H(
+  return { onPageChange: R(
     (r) => {
       P({ [e]: String(r) }, e);
     },
@@ -72,7 +72,7 @@ function De(e) {
 }
 function le(e) {
   const t = $("");
-  R(() => {
+  H(() => {
     const r = JSON.stringify(e.tableSettings);
     if (t.current === r) return;
     t.current = r;
@@ -144,7 +144,7 @@ function ue({ value: e, variant: t, colorField: r, tooltipKey: o, iconKey: n, ro
   );
 }
 function de({ formattedValue: e, rawValue: t, local: r, includeTime: o }) {
-  if (e == null)
+  if (e == null || e === "")
     return /* @__PURE__ */ c("span", { className: "text-gray-400 dark:text-gray-500", children: "-" });
   let n = e;
   if (r && t)
@@ -191,7 +191,7 @@ function he({ value: e, nullText: t = "-" }) {
   p.useEffect(() => () => {
     n.current && clearTimeout(n.current);
   }, []);
-  const i = H(() => {
+  const i = R(() => {
     e != null && navigator.clipboard.writeText(String(e)).then(() => {
       o(!0), n.current && clearTimeout(n.current), n.current = setTimeout(() => o(!1), 2e3);
     }).catch(() => {
@@ -234,7 +234,7 @@ function pe({ iconName: e, iconResolver: t }) {
   return r ? /* @__PURE__ */ c(r, { className: "h-4 w-4 text-gray-500 dark:text-gray-400" }) : null;
 }
 const ee = /* @__PURE__ */ new Map();
-function He(e, t) {
+function Re(e, t) {
   ee.set(e, t);
 }
 function ye(e) {
@@ -366,14 +366,16 @@ function ke(e, t, r, o, n, i) {
           nullText: o,
           iconResolver: n
         });
-      case "date":
+      case "date": {
+        const f = a.formatted_key ? t[a.formatted_key] : d, g = a.raw_key ? t[a.raw_key] : null;
         return p.createElement(de, {
           key: l,
-          formattedValue: a.formatted_key ? t[a.formatted_key] : d,
-          rawValue: a.raw_key ? t[a.raw_key] : null,
+          formattedValue: f == null ? null : String(f),
+          rawValue: g == null ? null : String(g),
           local: a.local ?? !1,
           includeTime: a.includeTime ?? !1
         });
+      }
       case "link": {
         const f = a.href_key ? t[a.href_key] : void 0;
         return p.createElement(me, {
@@ -488,9 +490,9 @@ function Ce(e) {
 }
 function we(e, t, r, o) {
   const [n, i] = V(!1), u = $(e.data);
-  return R(() => {
+  return H(() => {
     u.current !== e.data && (u.current = e.data, i(!1));
-  }, [e.data]), R(() => {
+  }, [e.data]), H(() => {
     const a = [t, r, o], l = W.on("start", (f) => {
       try {
         const g = new URL(f.detail.visit.url), y = new URL(window.location.href);
@@ -595,7 +597,7 @@ function Ee({ links: e, meta: t, onPageChange: r, isFetching: o, classNames: n }
 function Te({ colSpan: e, emptyText: t = "No results found.", className: r = "" }) {
   return /* @__PURE__ */ c("tr", { children: /* @__PURE__ */ c("td", { colSpan: e, className: r, children: t }) });
 }
-function Re(e) {
+function He(e) {
   const {
     tableData: t,
     className: r,
@@ -704,9 +706,9 @@ function Re(e) {
   ] });
 }
 export {
-  Re as InertiaTable,
+  He as InertiaTable,
   De as clearTableHooks,
-  He as registerCellComponent,
+  Re as registerCellComponent,
   je as registerIcon,
   Pe as registerIcons,
   Ie as registerTableHook,
