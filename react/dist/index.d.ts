@@ -1,5 +1,5 @@
 import { ComponentType } from 'react';
-import { JSX as JSX_2 } from 'react/jsx-runtime';
+import { JSX } from 'react/jsx-runtime';
 import { ReactNode } from 'react';
 import { RefObject } from 'react';
 import { Table } from '@tanstack/table-core';
@@ -117,7 +117,7 @@ export declare type IconResolver = (name: string) => ComponentType<{
     className?: string;
 }> | null | undefined;
 
-export declare function InertiaTable(props: InertiaTableProps): JSX_2.Element;
+export declare function InertiaTable(props: InertiaTableProps): JSX.Element;
 
 /** Complete table data structure from PHP Table::toArray() */
 export declare interface InertiaTableData {
