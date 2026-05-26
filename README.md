@@ -97,7 +97,7 @@ npm install vendor/forjedio/inertia-table/vue
 
 - PHP 8.2+
 - Laravel 12 or 13
-- Inertia.js 2.0+
+- Inertia.js 2.x or 3.x
 - React 18/19 or Vue 3.4+
 - Tailwind CSS 3.4+ or 4.0+
 
