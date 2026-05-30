@@ -1,6 +1,6 @@
 {
-    "name": "inertia-table-react",
-    "version": "1.0.0",
+    "name": "@forjedio/inertia-table-react",
+    "version": "0.0.0-dev",
     "description": "React components for Forjed Inertia Table - backend-driven dynamic tables for Laravel + Inertia.js",
     "license": "MIT",
     "author": "Forjed <packages@forjed.io> (https://forjed.io)",
@@ -9,6 +9,12 @@
         "type": "git",
         "url": "https://github.com/forjedio/inertia-table.git",
         "directory": "react"
+    },
+    "files": [
+        "dist"
+    ],
+    "publishConfig": {
+        "access": "public"
     },
     "keywords": [
         "react",

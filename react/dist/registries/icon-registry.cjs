@@ -1,1 +1,0 @@
-"use strict";Object.defineProperty(exports,Symbol.toStringTag,{value:"Module"});const n=new Map;function r(e,t){n.set(e,t)}function c(e){for(const[t,o]of Object.entries(e))n.set(t,o)}function s(e){return n.get(e)}exports.getIcon=s;exports.registerIcon=r;exports.registerIcons=c;

@@ -1,1 +1,0 @@
-"use strict";Object.defineProperty(exports,Symbol.toStringTag,{value:"Module"});const e=require("react/jsx-runtime");function u({colSpan:t,emptyText:r="No results found.",className:n=""}){return e.jsx("tr",{children:e.jsx("td",{colSpan:t,className:n,children:r})})}exports.TableEmpty=u;
