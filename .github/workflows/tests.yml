@@ -31,11 +31,17 @@ jobs:
 
   frontend:
     runs-on: ubuntu-latest
-    name: Frontend - ${{ matrix.package }}
+    name: Frontend - ${{ matrix.package }}${{ matrix.react-version && format(' (React {0})', matrix.react-version) || '' }}
 
     strategy:
+      fail-fast: false
       matrix:
-        package: [vue, react]
+        include:
+          - package: vue
+          - package: react
+            react-version: '18'
+          - package: react
+            react-version: '19'
 
     steps:
       - uses: actions/checkout@v6
@@ -51,6 +57,11 @@ jobs:
         working-directory: ${{ matrix.package }}
         run: npm ci
 
+      - name: Install React ${{ matrix.react-version }}
+        if: matrix.react-version == '18'
+        working-directory: ${{ matrix.package }}
+        run: npm install --no-save react@^${{ matrix.react-version }} react-dom@^${{ matrix.react-version }} @types/react@^${{ matrix.react-version }} @types/react-dom@^${{ matrix.react-version }}
+
       - name: Typecheck
         working-directory: ${{ matrix.package }}
         run: npm run typecheck
@@ -60,12 +71,12 @@ jobs:
         run: npm test
 
       - name: Run tests with coverage
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push' && matrix.react-version != '18'
         working-directory: ${{ matrix.package }}
         run: npx vitest run --coverage --coverage.reporter=json-summary
 
       - name: Extract coverage percentage
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push' && matrix.react-version != '18'
         id: coverage
         working-directory: ${{ matrix.package }}
         run: |
@@ -88,7 +99,7 @@ jobs:
           fi
 
       - name: Update coverage badge
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push' && matrix.react-version != '18'
         uses: schneegans/dynamic-badges-action@v1.8.0
         with:
           auth: ${{ secrets.GIST_SECRET }}
