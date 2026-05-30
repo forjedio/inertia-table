@@ -1,1 +1,0 @@
-"use strict";Object.defineProperty(exports,Symbol.toStringTag,{value:"Module"});const r=require("react/jsx-runtime"),u=require("../registries/icon-registry.cjs");function c({iconName:e,iconResolver:t}){const n=(t==null?void 0:t(e))??u.getIcon(e);return n?r.jsx(n,{className:"h-4 w-4 text-gray-500 dark:text-gray-400"}):null}exports.IconCell=c;

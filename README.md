@@ -54,7 +54,7 @@ return Inertia::render('Companies/Index', [
 Render it on the frontend:
 
 ```tsx
-import { InertiaTable } from 'inertia-table-react';
+import { InertiaTable } from '@forjedio/inertia-table-react';
 
 export default function Index({ companies }) {
     return <InertiaTable tableData={companies} />;
@@ -81,17 +81,26 @@ That's it. Search, sorting, pagination, and all cell rendering handled automatic
 
 ## Installation
 
+Install the backend package via Composer:
+
 ```bash
 composer require forjedio/inertia-table
 ```
 
+Then install the frontend package for your stack:
+
 ```bash
 # React
-npm install vendor/forjedio/inertia-table/react
+npm install @forjedio/inertia-table-react
 
 # Vue
-npm install vendor/forjedio/inertia-table/vue
+npm install @forjedio/inertia-table-vue
 ```
+
+Both frontend packages need Tailwind to scan their `dist/` so utility classes used by the table are emitted into your CSS bundle. See the per-package READMEs for the exact `@source` directive (Tailwind v4) or `content` entry (Tailwind v3):
+
+- [React Tailwind setup](./react/README.md#tailwind-css-content-sources)
+- [Vue Tailwind setup](./vue/README.md#tailwind-css-content-sources)
 
 ## Requirements
 
